@@ -1,5 +1,5 @@
 
-DROP TABLE IF EXISTS public.department CASCADE;;
+DROP TABLE IF EXISTS public.department CASCADE;
 
 CREATE SEQUENCE department_id_seq;
 
@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS public.department
     CONSTRAINT department_pkey PRIMARY KEY (department_id)
 );
 
-DROP TABLE IF EXISTS public.employee CASCADE;;
+DROP TABLE IF EXISTS public.employee CASCADE;
 
 CREATE SEQUENCE employee_id_seq;
 
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS public.employee_role
     CONSTRAINT employee_role_pkey PRIMARY KEY (counter)
 );
 
-DROP TABLE IF EXISTS public.role CASCADE;;
+DROP TABLE IF EXISTS public.role CASCADE;
 
 CREATE SEQUENCE role_id_seq;
 
