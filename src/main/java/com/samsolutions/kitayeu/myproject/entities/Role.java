@@ -10,8 +10,8 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int roleId;
     private String roleName;
-    @OneToMany (mappedBy = "role")
-    private Set<Employee> employeeSet;
+    @ManyToMany(mappedBy = "role")
+    private Set<Employee> employee;
 
     public Role() {
     }
@@ -32,11 +32,11 @@ public class Role {
         this.roleName = roleName;
     }
 
-    public Set<Employee> getEmployeeSet() {
-        return employeeSet;
+    public Set<Employee> getEmployee() {
+        return employee;
     }
 
-    public void setEmployeeSet(Set<Employee> employeeSet) {
-        this.employeeSet = employeeSet;
+    public void setEmployee(Set<Employee> employee) {
+        this.employee = employee;
     }
 }

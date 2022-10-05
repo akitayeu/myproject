@@ -2,7 +2,6 @@ package com.samsolutions.kitayeu.myproject.entities;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -17,10 +16,10 @@ public class Employee {
     private char gender;
     private String passportId;
     private LocalDate passportValidity;
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
-    private Department department;
-    @OneToMany (mappedBy = "employee")
-    private Set<Role> roleSet;
+    @ManyToMany (cascade = CascadeType.ALL)
+    @JoinTable (name = "employee_role",joinColumns = @JoinColumn (name ="employee_id"),
+    inverseJoinColumns = @JoinColumn(name="role_id"))
+    Set<Role> role;
 
     public Employee() {
     }
@@ -81,20 +80,12 @@ public class Employee {
         this.passportValidity = passportValidity;
     }
 
-    public Department getDepartment() {
-        return department;
+    public Set<Role> getRole() {
+        return role;
     }
 
-    public void setDepartment(Department department) {
-        this.department = department;
-    }
-
-    public Set<Role> getRoleSet() {
-        return roleSet;
-    }
-
-    public void setRoleSet(Set<Role> roleSet) {
-        this.roleSet = roleSet;
+    public void setRole(Set<Role> role) {
+        this.role = role;
     }
 }
 
