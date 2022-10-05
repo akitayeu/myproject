@@ -19,7 +19,7 @@ public class Employee {
     @ManyToMany (cascade = CascadeType.ALL)
     @JoinTable (name = "employee_role",joinColumns = @JoinColumn (name ="employee_id"),
     inverseJoinColumns = @JoinColumn(name="role_id"))
-    Set<Role> role;
+    private Set<Role> role;
 
     public Employee() {
     }
