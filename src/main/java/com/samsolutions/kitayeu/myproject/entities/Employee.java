@@ -20,6 +20,9 @@ public class Employee {
     @JoinTable (name = "employee_role",joinColumns = @JoinColumn (name ="employee_id"),
     inverseJoinColumns = @JoinColumn(name="role_id"))
     private Set<Role> role;
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "department_Id")
+    private Department department;
 
     public Employee() {
     }
@@ -86,6 +89,14 @@ public class Employee {
 
     public void setRole(Set<Role> role) {
         this.role = role;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 }
 
