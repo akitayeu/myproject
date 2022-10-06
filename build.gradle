@@ -3,7 +3,6 @@ plugins {
 	id 'io.spring.dependency-management' version '1.0.12.RELEASE'
 	id 'java'
 	id 'org.flywaydb.flyway' version '9.3.0'
-	id "org.hibernate.orm" version "6.1.3.Final"
 }
 
 group = 'com.samsolutions.kitayeu'
