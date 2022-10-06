@@ -10,9 +10,6 @@ public class Department {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int departmentId;
     private String departmentName;
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "department_id")
-    private Set<Employee> employeeSet;
 
     public Department() {
     }
@@ -31,14 +28,6 @@ public class Department {
 
     public void setDepartmentName(String departmentName) {
         this.departmentName = departmentName;
-    }
-
-    public Set<Employee> getEmployeeSet() {
-        return employeeSet;
-    }
-
-    public void setEmployeeSet(Set<Employee> employeeSet) {
-        this.employeeSet = employeeSet;
     }
 }
 
