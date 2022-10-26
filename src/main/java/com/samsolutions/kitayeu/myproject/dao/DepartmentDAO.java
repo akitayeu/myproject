@@ -4,14 +4,14 @@ import com.samsolutions.kitayeu.myproject.entities.Department;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.List;
 import java.util.function.Consumer;
 
 public class DepartmentDAO implements DAO<Department> {
-
+    @PersistenceContext
     private EntityManager entityManager;
 
     public DepartmentDAO() {

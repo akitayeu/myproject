@@ -4,14 +4,14 @@ import com.samsolutions.kitayeu.myproject.entities.Role;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Consumer;
 
 public class RoleDAO implements DAO<Role> {
-
+    @PersistenceContext
     private EntityManager entityManager;
 
     public RoleDAO() {
