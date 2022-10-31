@@ -1,4 +1,4 @@
-package com.samsolutions.kitayeu.myproject.dao;
+package com.samsolutions.kitayeu.myproject.daos;
 
 import java.util.List;
 import java.util.Optional;

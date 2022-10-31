@@ -1,4 +1,4 @@
-package com.samsolutions.kitayeu.myproject.dao;
+package com.samsolutions.kitayeu.myproject.daos;
 
 import com.samsolutions.kitayeu.myproject.entities.Employee;
 
