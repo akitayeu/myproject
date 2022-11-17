@@ -43,6 +43,6 @@ public class RoleTest {
     public void deleteAnything (){
         Role readedRole = roleRepository.getReferenceById(role.getRoleId());
         roleRepository.delete(readedRole);
-        List<Role> roleList = roleRepository.findAll();
+        assertEquals(0,roleRepository.findAll().size());
     }
 }
