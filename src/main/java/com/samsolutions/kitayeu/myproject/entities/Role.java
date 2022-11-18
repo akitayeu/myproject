@@ -4,16 +4,21 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table (name="role")
+@Table(name = "role")
 public class Role {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "role_id_seq", sequenceName = "role_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "role_id_seq")
     private int roleId;
     private String roleName;
     @ManyToMany(mappedBy = "role")
     private Set<Employee> employee;
 
     public Role() {
+    }
+
+    public Role(String roleName) {
+        this.roleName = roleName;
     }
 
     public int getRoleId() {

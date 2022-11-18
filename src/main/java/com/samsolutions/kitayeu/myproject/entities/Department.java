@@ -1,20 +1,21 @@
 package com.samsolutions.kitayeu.myproject.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table (name="department")
 public class Department {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name="department_id_seq", sequenceName = "department_id_seq",allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "department_id_seq")
     private int departmentId;
     private String departmentName;
 
     public Department() {
+    }
+
+    public Department(String departmentName) {
+        this.departmentName = departmentName;
     }
 
     public int getDepartmentId() {

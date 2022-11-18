@@ -8,7 +8,8 @@ import java.util.Set;
 @Table(name="employee")
 public class Employee {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name="employee_id_seq", sequenceName = "employee_id_seq",allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "employee_id_seq")
     private int employeeId;
     private String firstname;
     private String lastname;
@@ -20,11 +21,23 @@ public class Employee {
     @JoinTable (name = "employee_role",joinColumns = @JoinColumn (name ="employee_id"),
     inverseJoinColumns = @JoinColumn(name="role_id"))
     private Set<Role> role;
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "department_Id")
     private Department department;
 
     public Employee() {
+    }
+
+    public Employee(String firstname, String lastname, LocalDate birthdate, char gender, String passportId,
+                    LocalDate passportValidity, Set<Role> role, Department department) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.birthdate = birthdate;
+        this.gender = gender;
+        this.passportId = passportId;
+        this.passportValidity = passportValidity;
+        this.role = role;
+        this.department = department;
     }
 
     public int getEmployeeId() {
