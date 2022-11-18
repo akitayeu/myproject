@@ -11,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 
 import javax.transaction.Transactional;
-import java.util.List;
+
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -41,8 +41,8 @@ public class RoleTest {
 
     @AfterEach
     public void deleteAnything (){
-        Role readedRole = roleRepository.getReferenceById(role.getRoleId());
-        roleRepository.delete(readedRole);
+        Role deletedRole = roleRepository.getReferenceById(role.getRoleId());
+        roleRepository.delete(deletedRole);
         assertEquals(0,roleRepository.findAll().size());
     }
 }

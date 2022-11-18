@@ -21,7 +21,7 @@ public class Employee {
     @JoinTable (name = "employee_role",joinColumns = @JoinColumn (name ="employee_id"),
     inverseJoinColumns = @JoinColumn(name="role_id"))
     private Set<Role> role;
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "department_Id")
     private Department department;
 

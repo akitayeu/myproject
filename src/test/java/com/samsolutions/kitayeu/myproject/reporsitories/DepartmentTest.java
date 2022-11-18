@@ -42,8 +42,8 @@ public class DepartmentTest {
 
     @AfterEach
     public void deleteAnything (){
-        Department readedDepartment = departmentRepository.getReferenceById(Department.getDepartmentId());
-        departmentRepository.delete(readedDepartment);
+        Department deletedDepartment = departmentRepository.getReferenceById(Department.getDepartmentId());
+        departmentRepository.delete(deletedDepartment);
         assertEquals(0,departmentRepository.findAll().size());
     }
 }
