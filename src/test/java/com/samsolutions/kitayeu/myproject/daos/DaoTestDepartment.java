@@ -25,7 +25,7 @@ public class DaoTestDepartment {
         Department newDepartment = new Department();
         newDepartment.setDepartmentName("HR");
         departmentDAO.save(newDepartment);
-        this.id=newDepartment.getDepartmentId();
+        this.id = newDepartment.getDepartmentId();
     }
 
     @Test

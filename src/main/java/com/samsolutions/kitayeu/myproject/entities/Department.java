@@ -3,11 +3,11 @@ package com.samsolutions.kitayeu.myproject.entities;
 import javax.persistence.*;
 
 @Entity
-@Table (name="department")
+@Table(name = "department")
 public class Department {
     @Id
-    @SequenceGenerator(name="department_id_seq", sequenceName = "department_id_seq",allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "department_id_seq")
+    @SequenceGenerator(name = "department_id_seq", sequenceName = "department_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "department_id_seq")
     private int departmentId;
     private String departmentName;
 

@@ -5,11 +5,11 @@ import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
-@Table(name="employee")
+@Table(name = "employee")
 public class Employee {
     @Id
-    @SequenceGenerator(name="employee_id_seq", sequenceName = "employee_id_seq",allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "employee_id_seq")
+    @SequenceGenerator(name = "employee_id_seq", sequenceName = "employee_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "employee_id_seq")
     private int employeeId;
     private String firstname;
     private String lastname;
@@ -17,9 +17,9 @@ public class Employee {
     private char gender;
     private String passportId;
     private LocalDate passportValidity;
-    @ManyToMany (cascade = CascadeType.ALL)
-    @JoinTable (name = "employee_role",joinColumns = @JoinColumn (name ="employee_id"),
-    inverseJoinColumns = @JoinColumn(name="role_id"))
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "employee_role", joinColumns = @JoinColumn(name = "employee_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> role;
     @ManyToOne(optional = false, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "department_Id")

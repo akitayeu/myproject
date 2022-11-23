@@ -1,8 +1,7 @@
-package com.samsolutions.kitayeu.myproject.reporsitories;
+package com.samsolutions.kitayeu.myproject.repositories;
 
 
 import com.samsolutions.kitayeu.myproject.entities.Role;
-import com.samsolutions.kitayeu.myproject.repositories.RoleRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,16 +32,16 @@ public class RoleTest {
     @Transactional
     @Rollback(true)
     public void readUpdateAnything() {
-    Role readedRole = roleRepository.getReferenceById(role.getRoleId());
-    assertEquals ("Developer",readedRole.getRoleName());
-    readedRole.setRoleName("PM");
-    roleRepository.saveAndFlush(readedRole);
+        Role readedRole = roleRepository.getReferenceById(role.getRoleId());
+        assertEquals("Developer", readedRole.getRoleName());
+        readedRole.setRoleName("PM");
+        roleRepository.saveAndFlush(readedRole);
     }
 
     @AfterEach
-    public void deleteAnything (){
+    public void deleteAnything() {
         Role deletedRole = roleRepository.getReferenceById(role.getRoleId());
         roleRepository.delete(deletedRole);
-        assertEquals(0,roleRepository.findAll().size());
+        assertEquals(0, roleRepository.findAll().size());
     }
 }

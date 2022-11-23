@@ -1,8 +1,7 @@
-package com.samsolutions.kitayeu.myproject.reporsitories;
+package com.samsolutions.kitayeu.myproject.repositories;
 
 
 import com.samsolutions.kitayeu.myproject.entities.Department;
-import com.samsolutions.kitayeu.myproject.repositories.DepartmentRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,8 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 
 import javax.transaction.Transactional;
-
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -34,16 +31,16 @@ public class DepartmentTest {
     @Transactional
     @Rollback(true)
     public void readUpdateAnything() {
-    Department readedDepartment = departmentRepository.getReferenceById(Department.getDepartmentId());
-    assertEquals ("Sales_Department",readedDepartment.getDepartmentName());
-    readedDepartment.setDepartmentName("HR");
-    departmentRepository.saveAndFlush(readedDepartment);
+        Department readedDepartment = departmentRepository.getReferenceById(Department.getDepartmentId());
+        assertEquals("Sales_Department", readedDepartment.getDepartmentName());
+        readedDepartment.setDepartmentName("HR");
+        departmentRepository.saveAndFlush(readedDepartment);
     }
 
     @AfterEach
-    public void deleteAnything (){
+    public void deleteAnything() {
         Department deletedDepartment = departmentRepository.getReferenceById(Department.getDepartmentId());
         departmentRepository.delete(deletedDepartment);
-        assertEquals(0,departmentRepository.findAll().size());
+        assertEquals(0, departmentRepository.findAll().size());
     }
 }

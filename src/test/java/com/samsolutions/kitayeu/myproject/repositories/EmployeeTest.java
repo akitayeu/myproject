@@ -1,10 +1,8 @@
-package com.samsolutions.kitayeu.myproject.reporsitories;
+package com.samsolutions.kitayeu.myproject.repositories;
 
 import com.samsolutions.kitayeu.myproject.entities.Department;
 import com.samsolutions.kitayeu.myproject.entities.Employee;
 import com.samsolutions.kitayeu.myproject.entities.Role;
-import com.samsolutions.kitayeu.myproject.repositories.DepartmentRepository;
-import com.samsolutions.kitayeu.myproject.repositories.EmployeeRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

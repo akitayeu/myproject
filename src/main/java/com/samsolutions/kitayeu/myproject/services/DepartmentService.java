@@ -5,9 +5,13 @@ import com.samsolutions.kitayeu.myproject.entities.Department;
 import java.util.List;
 
 public interface DepartmentService {
-    Department createDepartment (Department department);
+    Department createDepartment(Department department);
+
     List<Department> getAllDepartments();
-    void deleteDepartment (int id);
-    Department updateDepartment (Department department);
-    Department getById (int id);
+
+    void deleteDepartment(int id);
+
+    Department updateDepartment(Department department);
+
+    Department getById(int id);
 }
