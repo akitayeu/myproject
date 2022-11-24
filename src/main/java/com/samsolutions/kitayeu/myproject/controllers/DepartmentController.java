@@ -1,6 +1,6 @@
 package com.samsolutions.kitayeu.myproject.controllers;
 
-import com.samsolutions.kitayeu.myproject.services.Implementations.DepartmentServiceImplementation;
+import com.samsolutions.kitayeu.myproject.services.Implementations.DepartmentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class DepartmentController {
 
     @Autowired
-    private DepartmentServiceImplementation departmentServiceImplementation;
-    public DepartmentController (DepartmentServiceImplementation departmentServiceImplementation){
-        this.departmentServiceImplementation=departmentServiceImplementation;
+    private DepartmentServiceImpl departmentServiceImpl;
+    public DepartmentController (DepartmentServiceImpl departmentServiceImpl){
+        this.departmentServiceImpl=departmentServiceImpl;
     }
     @GetMapping()
     public String readAll(Model model){
-        model.addAttribute("department",departmentServiceImplementation.getAllDepartments());
+        model.addAttribute("department",departmentServiceImpl.getAllDepartments());
         return "departments/listofdepartments";
     }
 }
