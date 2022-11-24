@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http//thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Departments</title>
+	<meta charset="UTF-8">
+	<title>Departments</title>
 </head>
 <body>
 
 <div th:each="department : ${department}">
+	<a th:text="${department.getDepartmentName()}">user</a>
 </div>
-
+<br/>
+<br/>
+<a href="/">Homepage</a>
 </body>
 </html>

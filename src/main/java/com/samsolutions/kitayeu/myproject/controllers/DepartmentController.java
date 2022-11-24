@@ -16,10 +16,11 @@ public class DepartmentController {
     public DepartmentController (DepartmentServiceImplementation departmentServiceImplementation){
         this.departmentServiceImplementation=departmentServiceImplementation;
     }
-
     @GetMapping()
     public String readAll(Model model){
-        model.addAttribute("departments",departmentServiceImplementation.getAllDepartments());
-        return "departments/index";
+        model.addAttribute("department",departmentServiceImplementation.getAllDepartments());
+        return "departments/listofdepartments";
     }
 }
+
+
