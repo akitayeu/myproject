@@ -7,9 +7,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 
-import javax.transaction.Transactional;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -22,7 +21,7 @@ public class DepartmentTest {
     private int id1;
 
     @BeforeEach
-    public void createAnything() {
+    public void createSomething() {
         Department createdDepartment1 = new Department("Sales_Department");
         departmentRepository.saveAndFlush(createdDepartment1);
         id1 = createdDepartment1.getDepartmentId();
@@ -31,16 +30,16 @@ public class DepartmentTest {
     }
 
     @Test
-    public void readUpdateAnything() {
-        Department readDepartment = departmentRepository.getOne(id1);
+    public void readUpdateSomething() {
+        Department readDepartment = departmentRepository.findById(id1).get();
         assertEquals("Sales_Department", readDepartment.getDepartmentName());
         readDepartment.setDepartmentName("HR");
         departmentRepository.saveAndFlush(readDepartment);
     }
 
     @AfterEach
-    public void deleteAnything() {
-        Department deletedDepartment = departmentRepository.getReferenceById(id1);
+    public void deleteSomething() {
+        Department deletedDepartment = departmentRepository.findById(id1).get();
         assertEquals("HR", deletedDepartment.getDepartmentName());
         departmentRepository.delete(deletedDepartment);
         assertEquals(1, departmentRepository.findAll().size());

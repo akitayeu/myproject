@@ -24,7 +24,7 @@ public class RoleTest {
     private int id;
 
     @BeforeEach
-    public void createAnything() {
+    public void createSomething() {
         Role createdRole1 = new Role("Developer");
         roleRepository.saveAndFlush(createdRole1);
         id = createdRole1.getRoleId();
@@ -33,18 +33,16 @@ public class RoleTest {
     }
 
     @Test
-    @Transactional
-    @Rollback(true)
-    public void readUpdateAnything() {
-        Role readedRole = roleRepository.getReferenceById(id);
-        assertEquals("Developer", readedRole.getRoleName());
-        readedRole.setRoleName("PM");
-        roleRepository.saveAndFlush(readedRole);
+    public void readUpdateSomething() {
+        Role readRole = roleRepository.findById(id).get();
+        assertEquals("Developer", readRole.getRoleName());
+        readRole.setRoleName("PM");
+        roleRepository.saveAndFlush(readRole);
     }
 
     @AfterEach
-    public void deleteAnything() {
-        Role deletedRole = roleRepository.getReferenceById(id);
+    public void deleteSomething() {
+        Role deletedRole = roleRepository.findById(id).get();
         assertEquals("PM", deletedRole.getRoleName());
         roleRepository.delete(deletedRole);
         assertEquals(1, roleRepository.findAll().size());

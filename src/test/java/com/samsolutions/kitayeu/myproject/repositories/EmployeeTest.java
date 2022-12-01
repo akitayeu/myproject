@@ -34,7 +34,7 @@ public class EmployeeTest {
     private int id;
 
     @BeforeEach
-    public void createAnything() {
+    public void createSomething() {
         department = new Department("Developer");
         departmentRepository.saveAndFlush(department);
         employee = new Employee();
@@ -67,16 +67,16 @@ public class EmployeeTest {
     }
 
     @Test
-    public void readUpdateAnything() {
-        Employee readEmployee = employeeRepository.getReferenceById(id);
+    public void readUpdateSomething() {
+        Employee readEmployee = employeeRepository.findById(id).get();
         assertEquals("Kitayeu", readEmployee.getLastname());
         readEmployee.setLastname("Ivanov");
         employeeRepository.save(readEmployee);
     }
 
     @AfterEach
-    public void deleteAnything() {
-        Employee deletedEmployee = employeeRepository.getReferenceById(id);
+    public void deleteSomething() {
+        Employee deletedEmployee = employeeRepository.findById(id).get();
         assertEquals("Ivanov", deletedEmployee.getLastname());
         employeeRepository.delete(deletedEmployee);
         assertEquals(1, employeeRepository.findAll().size());
