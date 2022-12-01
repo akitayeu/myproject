@@ -20,19 +20,23 @@ public class RoleTest {
 
     @Autowired
     private RoleRepository roleRepository;
-    private Role role;
+
+    private int id;
 
     @BeforeEach
     public void createAnything() {
-        Role createdRole = new Role("Developer");
-        role = roleRepository.saveAndFlush(createdRole);
+        Role createdRole1 = new Role("Developer");
+        roleRepository.saveAndFlush(createdRole1);
+        id = createdRole1.getRoleId();
+        Role createdRole2 = new Role("Tester");
+        roleRepository.saveAndFlush(createdRole2);
     }
 
     @Test
     @Transactional
     @Rollback(true)
     public void readUpdateAnything() {
-        Role readedRole = roleRepository.getReferenceById(role.getRoleId());
+        Role readedRole = roleRepository.getReferenceById(id);
         assertEquals("Developer", readedRole.getRoleName());
         readedRole.setRoleName("PM");
         roleRepository.saveAndFlush(readedRole);
@@ -40,8 +44,9 @@ public class RoleTest {
 
     @AfterEach
     public void deleteAnything() {
-        Role deletedRole = roleRepository.getReferenceById(role.getRoleId());
+        Role deletedRole = roleRepository.getReferenceById(id);
+        assertEquals("PM", deletedRole.getRoleName());
         roleRepository.delete(deletedRole);
-        assertEquals(0, roleRepository.findAll().size());
+        assertEquals(1, roleRepository.findAll().size());
     }
 }

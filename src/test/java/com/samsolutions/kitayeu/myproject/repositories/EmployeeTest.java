@@ -24,17 +24,19 @@ public class EmployeeTest {
     @Autowired
     private DepartmentRepository departmentRepository;
     @Autowired
-    private DepartmentRepository roleRepository;
+    private RoleRepository roleRepository;
     private Employee employee;
+    private Employee employee1;
     private Department department;
     private Set<Role> roleSet = new HashSet<>();
     private Role role;
+    private Role role1;
+    private int id;
 
     @BeforeEach
     public void createAnything() {
-        department = new Department("economic department");
-        role = new Role("trainee");
-        roleSet.add(role);
+        department = new Department("Developer");
+        departmentRepository.saveAndFlush(department);
         employee = new Employee();
         employee.setFirstname("Aliaksandr");
         employee.setLastname("Kitayeu");
@@ -43,33 +45,42 @@ public class EmployeeTest {
         employee.setPassportId("B");
         employee.setPassportValidity(LocalDate.of(2025, 11, 14));
         employee.setDepartment(department);
+        role = new Role("trainee");
+        roleRepository.saveAndFlush(role);
+        role1 = new Role("Tester");
+        roleRepository.saveAndFlush(role1);
+        roleSet.add(role);
+        roleSet.add(role1);
         employee.setRole(roleSet);
         employeeRepository.saveAndFlush(employee);
+        id = employee.getEmployeeId();
+        employee1 = new Employee();
+        employee1.setFirstname("Petr");
+        employee1.setLastname("Petrov");
+        employee1.setBirthdate(LocalDate.of(1990, 01, 01));
+        employee1.setGender('M');
+        employee1.setPassportId("C");
+        employee1.setPassportValidity(LocalDate.of(2023, 10, 14));
+        employee1.setDepartment(department);
+        employee1.setRole(roleSet);
+        employeeRepository.saveAndFlush(employee1);
     }
 
     @Test
-    @Transactional
-    @Rollback(true)
     public void readUpdateAnything() {
-        Employee readedEmployee = employeeRepository.getReferenceById(employee.getEmployeeId());
-        assertEquals("Kitayeu", readedEmployee.getLastname());
-        readedEmployee.setFirstname("Mark");
-        readedEmployee.setLastname("Ivanov");
-        readedEmployee.setBirthdate(LocalDate.of(2000, 01, 01));
-        readedEmployee.setGender('M');
-        readedEmployee.setPassportId("C");
-        readedEmployee.setPassportValidity(LocalDate.of(2027, 01, 01));
-        readedEmployee.setDepartment(department);
-        readedEmployee.setRole(roleSet);
-        employeeRepository.saveAndFlush(readedEmployee);
+        Employee readEmployee = employeeRepository.getReferenceById(id);
+        assertEquals("Kitayeu", readEmployee.getLastname());
+        readEmployee.setLastname("Ivanov");
+        employeeRepository.save(readEmployee);
     }
 
     @AfterEach
     public void deleteAnything() {
-        Employee deletedEmployee = employeeRepository.getReferenceById(employee.getEmployeeId());
+        Employee deletedEmployee = employeeRepository.getReferenceById(id);
+        assertEquals("Ivanov", deletedEmployee.getLastname());
         employeeRepository.delete(deletedEmployee);
-        assertEquals(0, employeeRepository.findAll().size());
+        assertEquals(1, employeeRepository.findAll().size());
         assertEquals(1, departmentRepository.findAll().size());
-        assertEquals(1, roleRepository.findAll().size());
+        assertEquals(2, roleRepository.findAll().size());
     }
 }

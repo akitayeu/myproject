@@ -19,28 +19,30 @@ public class DepartmentTest {
 
     @Autowired
     private DepartmentRepository departmentRepository;
-    private Department Department;
+    private int id1;
 
     @BeforeEach
     public void createAnything() {
-        Department createdDepartment = new Department("Sales_Department");
-        Department = departmentRepository.saveAndFlush(createdDepartment);
+        Department createdDepartment1 = new Department("Sales_Department");
+        departmentRepository.saveAndFlush(createdDepartment1);
+        id1 = createdDepartment1.getDepartmentId();
+        Department createdDepartment2 = new Department("Economic");
+        departmentRepository.saveAndFlush(createdDepartment2);
     }
 
     @Test
-    @Transactional
-    @Rollback(true)
     public void readUpdateAnything() {
-        Department readedDepartment = departmentRepository.getReferenceById(Department.getDepartmentId());
-        assertEquals("Sales_Department", readedDepartment.getDepartmentName());
-        readedDepartment.setDepartmentName("HR");
-        departmentRepository.saveAndFlush(readedDepartment);
+        Department readDepartment = departmentRepository.getOne(id1);
+        assertEquals("Sales_Department", readDepartment.getDepartmentName());
+        readDepartment.setDepartmentName("HR");
+        departmentRepository.saveAndFlush(readDepartment);
     }
 
     @AfterEach
     public void deleteAnything() {
-        Department deletedDepartment = departmentRepository.getReferenceById(Department.getDepartmentId());
+        Department deletedDepartment = departmentRepository.getReferenceById(id1);
+        assertEquals("HR", deletedDepartment.getDepartmentName());
         departmentRepository.delete(deletedDepartment);
-        assertEquals(0, departmentRepository.findAll().size());
+        assertEquals(1, departmentRepository.findAll().size());
     }
 }
