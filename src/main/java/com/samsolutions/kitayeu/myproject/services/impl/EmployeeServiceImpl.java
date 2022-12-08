@@ -1,4 +1,4 @@
-package com.samsolutions.kitayeu.myproject.services.Implementations;
+package com.samsolutions.kitayeu.myproject.services.impl;
 
 import com.samsolutions.kitayeu.myproject.entities.Employee;
 import com.samsolutions.kitayeu.myproject.repositories.EmployeeRepository;

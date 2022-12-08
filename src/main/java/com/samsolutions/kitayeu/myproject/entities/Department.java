@@ -1,6 +1,8 @@
 package com.samsolutions.kitayeu.myproject.entities;
 
 import javax.persistence.*;
+import java.util.Set;
+
 
 @Entity
 @Table(name = "department")

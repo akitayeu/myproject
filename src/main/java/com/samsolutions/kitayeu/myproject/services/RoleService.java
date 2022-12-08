@@ -1,17 +1,18 @@
 package com.samsolutions.kitayeu.myproject.services;
 
-import com.samsolutions.kitayeu.myproject.entities.Role;
+
+import com.samsolutions.kitayeu.myproject.dtos.RoleDto;
 
 import java.util.List;
 
 public interface RoleService {
-    Role createRole(Role role);
+    RoleDto createRoleDto(RoleDto roleDto);
 
-    List<Role> getAllRoles();
+    List<RoleDto> getAllRoleDtos();
 
     void deleteRole(int id);
 
-    Role updateRole(Role role);
+    RoleDto updateRoleDto(RoleDto roleDto);
 
-    Role getById(int id);
+    RoleDto getById(int id);
 }

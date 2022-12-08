@@ -1,6 +1,6 @@
 package com.samsolutions.kitayeu.myproject.controllers;
 
-import com.samsolutions.kitayeu.myproject.services.Implementations.EmployeeServiceImpl;
+import com.samsolutions.kitayeu.myproject.services.impl.EmployeeServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

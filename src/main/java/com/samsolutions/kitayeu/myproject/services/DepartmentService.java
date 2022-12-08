@@ -1,17 +1,18 @@
 package com.samsolutions.kitayeu.myproject.services;
 
-import com.samsolutions.kitayeu.myproject.entities.Department;
+
+import com.samsolutions.kitayeu.myproject.dtos.DepartmentDto;
 
 import java.util.List;
 
 public interface DepartmentService {
-    Department createDepartment(Department department);
+    DepartmentDto createDepartmentDto(DepartmentDto departmentDto);
 
-    List<Department> getAllDepartments();
+    List<DepartmentDto> getAllDepartmentDtos();
 
     void deleteDepartment(int id);
 
-    Department updateDepartment(Department department);
+    DepartmentDto updateDepartmentDto(DepartmentDto departmentDto);
 
-    Department getById(int id);
+    DepartmentDto getById(int id);
 }

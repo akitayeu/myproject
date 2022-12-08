@@ -5,8 +5,8 @@
 	<title>Departments</title>
 </head>
 <body>
-<div th:each="department : ${department}">
-	<a th:text="${department.getDepartmentName()}">user</a>
+<div th:each="departmentDto : ${departmentDto}">
+	<a th:text="${departmentDto.getDepartmentName()}">user</a>
 </div>
 <br/>
 <br/>

@@ -21,8 +21,10 @@ dependencies {
 	implementation 'org.projectlombok:lombok:1.18.24'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
 	implementation 'org.flywaydb:flyway-core'
+	implementation 'org.modelmapper:modelmapper-examples:3.1.0'
+    implementation 'org.jetbrains:annotations:20.1.0'
 
-	compileOnly 'org.projectlombok:lombok:1.18.24'
+    compileOnly 'org.projectlombok:lombok:1.18.24'
 
 	annotationProcessor 'org.projectlombok:lombok:1.18.24'
 

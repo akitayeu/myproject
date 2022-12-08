@@ -1,6 +1,6 @@
 package com.samsolutions.kitayeu.myproject.controllers;
 
-import com.samsolutions.kitayeu.myproject.services.Implementations.RoleServiceImpl;
+import com.samsolutions.kitayeu.myproject.services.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class RoleController {
 
     @Autowired
-    private RoleServiceImpl roleServiceImpl;
-    public RoleController(RoleServiceImpl roleServiceImpl){
-        this.roleServiceImpl=roleServiceImpl;
+    private RoleService roleService;
+    public RoleController(RoleService roleService){
+        this.roleService=roleService;
     }
     @GetMapping()
     public String readAll(Model model){
-        model.addAttribute("role",roleServiceImpl.getAllRoles());
+        model.addAttribute("roleDto",roleService.getAllRoleDtos());
         return "roles/listofroles";
     }
 }
