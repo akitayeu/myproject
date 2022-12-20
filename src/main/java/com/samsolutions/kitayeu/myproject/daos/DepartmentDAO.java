@@ -19,9 +19,6 @@ public class DepartmentDAO implements DAO<Department> {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public DepartmentDAO() {
-    }
-
     @Override
     public Optional<Department> get(int id) {
         return Optional.ofNullable(entityManager.find(Department.class, id));
@@ -48,9 +45,6 @@ public class DepartmentDAO implements DAO<Department> {
     @Override
     @Transactional
     public void delete(Department department) {
-        //entityManager.remove(department);  not working because
-        // org.springframework.dao.InvalidDataAccessApiUsageException:
-        // Removing a detached instance com.samsolutions.kitayeu.myproject.entities.Department#1
         entityManager.remove(entityManager.contains(department) ? department : entityManager.merge(department));
     }
 

@@ -18,7 +18,7 @@ public class EmployeeController {
     }
     @GetMapping()
     public String readAll(Model model){
-        model.addAttribute("employee",employeeServiceImpl.getAllEmployees());
+        model.addAttribute("employee",employeeServiceImpl.getAllEmployeeDtos());
         return "employees/listofemployees";
     }
 }

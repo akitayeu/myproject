@@ -1,17 +1,17 @@
 package com.samsolutions.kitayeu.myproject.services;
 
-import com.samsolutions.kitayeu.myproject.entities.Employee;
+import com.samsolutions.kitayeu.myproject.dtos.EmployeeDto;
 
 import java.util.List;
 
 public interface EmployeeService {
-    Employee createEmployee(Employee employee);
+    EmployeeDto createEmployeeDto(EmployeeDto employeeDto);
 
-    List<Employee> getAllEmployees();
+    List<EmployeeDto> getAllEmployeeDtos();
 
     void deleteEmployee(int id);
 
-    Employee updateEmployee(Employee employee);
+    EmployeeDto updateEmployeeDto(EmployeeDto employeeDto);
 
-    Employee getById(int id);
+    EmployeeDto getById(int id);
 }

@@ -2,8 +2,8 @@ package com.samsolutions.kitayeu.myproject.converters;
 
 import com.samsolutions.kitayeu.myproject.dtos.RoleDto;
 import com.samsolutions.kitayeu.myproject.entities.Role;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.testng.annotations.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

@@ -1,11 +1,15 @@
 package com.samsolutions.kitayeu.myproject.services.impl;
 
+import com.samsolutions.kitayeu.myproject.converters.EmployeeToDtoConverter;
+import com.samsolutions.kitayeu.myproject.dtos.EmployeeDto;
 import com.samsolutions.kitayeu.myproject.entities.Employee;
 import com.samsolutions.kitayeu.myproject.repositories.EmployeeRepository;
 import com.samsolutions.kitayeu.myproject.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -14,28 +18,40 @@ public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeRepository employeeRepository;
 
     @Override
-    public Employee createEmployee(Employee employee) {
-        Employee createdEmployee = employeeRepository.saveAndFlush(employee);
-        return createdEmployee;
+    @Transactional
+    public EmployeeDto createEmployeeDto(EmployeeDto employeeDto) {
+
+        return employeeDto;
     }
 
     @Override
-    public List<Employee> getAllEmployees() {
-        return employeeRepository.findAll();
+    public List<EmployeeDto> getAllEmployeeDtos() {
+
+        EmployeeToDtoConverter employeeToDtoConverter = new EmployeeToDtoConverter();
+        List<EmployeeDto> employeeDtoList = new ArrayList<>();
+        List<Employee> employeeList = employeeRepository.findAll();
+        for (Employee employee : employeeList) {
+            employeeDtoList.add(employeeToDtoConverter.convert(employee));
+        }
+        return employeeDtoList;
     }
 
     @Override
+    @Transactional
     public void deleteEmployee(int id) {
         employeeRepository.deleteById(id);
     }
 
     @Override
-    public Employee updateEmployee(Employee employee) {
-        return employeeRepository.saveAndFlush(employee);
+    @Transactional
+    public EmployeeDto updateEmployeeDto(EmployeeDto employeeDto) {
+
+        return employeeDto;
     }
 
     @Override
-    public Employee getById(int id) {
-        return employeeRepository.getReferenceById(id);
+    public EmployeeDto getById(int id) {
+        EmployeeToDtoConverter employeeToDtoConverter = new EmployeeToDtoConverter();
+        return employeeToDtoConverter.convert(employeeRepository.getReferenceById(id));
     }
 }

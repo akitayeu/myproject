@@ -1,6 +1,8 @@
 package com.samsolutions.kitayeu.myproject.converters;
 
+import com.samsolutions.kitayeu.myproject.dtos.DepartmentDto;
 import com.samsolutions.kitayeu.myproject.dtos.EmployeeDto;
+import com.samsolutions.kitayeu.myproject.dtos.RoleDto;
 import com.samsolutions.kitayeu.myproject.entities.Department;
 import com.samsolutions.kitayeu.myproject.entities.Employee;
 import com.samsolutions.kitayeu.myproject.entities.Role;
@@ -15,50 +17,32 @@ import java.util.Set;
 @SpringBootTest
 public class EmployeeConverterTest {
 
-
-    @Test
-    public void convertToEntity() {
-        Department department = new Department("Department1");
-        Set<Role> roleSet = new HashSet<>();
-        Role role1 = new Role("Role1");
-        Role role11 = new Role("Role11");
-        roleSet.add(role1);
-        roleSet.add(role11);
-        EmployeeDto employeeDto = new EmployeeDto();
-        employeeDto.setEmployeeId(1);
-        employeeDto.setFirstname("Firstname1");
-        employeeDto.setLastname("Lastname1");
-        employeeDto.setDepartment(department);
-        employeeDto.setRole(roleSet);
-        EmployeeConverter employeeConvertor = new EmployeeConverter();
-        Employee employee = employeeConvertor.toEntity(employeeDto);
-        assertEquals(employee.getEmployeeId(), employeeDto.getEmployeeId());
-        assertEquals(employee.getFirstname(), employeeDto.getFirstname());
-        assertEquals(employee.getLastname(), employeeDto.getLastname());
-        assertEquals(employee.getDepartment(), employeeDto.getDepartment());
-        assertEquals(employee.getRole(), employeeDto.getRole());
-    }
-
     @Test
     public void convertToDto() {
-        Department department2 = new Department("Department2");
-        Set<Role> roleSet2 = new HashSet<>();
-        Role role2 = new Role("Role2");
-        Role role22 = new Role("Role22");
-        roleSet2.add(role2);
-        roleSet2.add(role22);
+        Department department = new Department();
+        department.setDepartmentId(1);
+        department.setDepartmentName("Department1");
+        Set<Role> roleSet = new HashSet<>();
+        Role role1 = new Role();
+        Role role11 = new Role();
+        role1.setRoleId(1);
+        role1.setRoleName("Test1");
+        role11.setRoleId(11);
+        role11.setRoleName("Test11");
+        roleSet.add(role1);
+        roleSet.add(role11);
         Employee employee = new Employee();
-        employee.setEmployeeId(2);
-        employee.setFirstname("Firstname2");
-        employee.setLastname("Lastname2");
-        employee.setDepartment(department2);
-        employee.setRole(roleSet2);
-        EmployeeConverter employeeConvertor = new EmployeeConverter();
-        EmployeeDto employeeDto = employeeConvertor.toDto(employee);
-        assertEquals(employeeDto.getEmployeeId(), employee.getEmployeeId());
-        assertEquals(employeeDto.getFirstname(), employee.getFirstname());
-        assertEquals(employeeDto.getLastname(), employee.getLastname());
-        assertEquals(employeeDto.getDepartment(), employee.getDepartment());
-        assertEquals(employeeDto.getRole(), employee.getRole());
+        employee.setEmployeeId(1);
+        employee.setFirstname("Firstname1");
+        employee.setLastname("Lastname1");
+        employee.setDepartment(department);
+        employee.setRole(roleSet);
+        EmployeeToDtoConverter employeeToDtoConverter = new EmployeeToDtoConverter();
+        EmployeeDto employeeDto = employeeToDtoConverter.convert(employee);
+        assertEquals(employeeDto.getEmployeeId(), employeeDto.getEmployeeId());
+        assertEquals(employeeDto.getFirstname(), employeeDto.getFirstname());
+        assertEquals(employeeDto.getLastname(), employeeDto.getLastname());
+        assertEquals(employeeDto.getDepartmentDto().getDepartmentName(), employee.getDepartment().getDepartmentName());
+        assertEquals(employeeDto.getRoleDtoSet().size(), employee.getRole().size());
     }
 }

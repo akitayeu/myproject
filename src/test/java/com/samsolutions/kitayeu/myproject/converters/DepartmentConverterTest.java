@@ -2,8 +2,8 @@ package com.samsolutions.kitayeu.myproject.converters;
 
 import com.samsolutions.kitayeu.myproject.dtos.DepartmentDto;
 import com.samsolutions.kitayeu.myproject.entities.Department;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.testng.annotations.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -14,11 +14,11 @@ public class DepartmentConverterTest {
     @Test
     public void toEntity() {
         DepartmentDto departmentDto = new DepartmentDto();
-        departmentDto.setDepartmentId(1);
+  //      departmentDto.setDepartmentId(1);
         departmentDto.setDepartmentName("Test1");
         DtoToDepartmentConverter dtoToDepartmentConverter = new DtoToDepartmentConverter();
         Department department = dtoToDepartmentConverter.convert(departmentDto);
-        assertEquals(department.getDepartmentId(),departmentDto.getDepartmentId());
+//        assertEquals(department.getDepartmentId(),departmentDto.getDepartmentId());
         assertEquals(department.getDepartmentName(),departmentDto.getDepartmentName());
     }
 

@@ -7,6 +7,7 @@ import com.samsolutions.kitayeu.myproject.entities.Department;
 import com.samsolutions.kitayeu.myproject.repositories.DepartmentRepository;
 import com.samsolutions.kitayeu.myproject.services.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -23,8 +24,18 @@ public class DepartmentServiceImpl implements DepartmentService {
     public DepartmentDto createDepartmentDto(DepartmentDto departmentDto) {
         DtoToDepartmentConverter dtoToDepartmentConverter = new DtoToDepartmentConverter();
         DepartmentToDtoConverter departmentToDtoConverter = new DepartmentToDtoConverter();
-        Department createdDepartment = departmentRepository.save(dtoToDepartmentConverter.convert(departmentDto));
-        return departmentToDtoConverter.convert(createdDepartment);
+        String departmentNameFromDto = departmentDto.getDepartmentName();
+        List<String> departmentNameFromDatabase = new ArrayList<>();
+        List<Department> departmentList = departmentRepository.findAll();
+        for (Department department : departmentList) {
+            departmentNameFromDatabase.add(departmentToDtoConverter.convert(department).getDepartmentName());
+        }
+        if (departmentNameFromDatabase.contains(departmentNameFromDto)) {
+            return departmentDto;
+        } else {
+            Department createdDepartment = departmentRepository.save(dtoToDepartmentConverter.convert(departmentDto));
+            return departmentToDtoConverter.convert(createdDepartment);
+        }
     }
 
     @Override
