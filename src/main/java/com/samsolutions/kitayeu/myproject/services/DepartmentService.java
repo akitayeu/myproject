@@ -8,11 +8,11 @@ import java.util.List;
 public interface DepartmentService {
     DepartmentDto createDepartmentDto(DepartmentDto departmentDto);
 
-    List<DepartmentDto> getAllDepartmentDtos();
+    List<DepartmentDto> getAllDepartmentDtos(int page);
 
     void deleteDepartment(int id);
 
-    DepartmentDto updateDepartmentDto(DepartmentDto departmentDto);
+    DepartmentDto updateDepartmentDto(DepartmentDto departmentDto, int id);
 
     DepartmentDto getById(int id);
 }
