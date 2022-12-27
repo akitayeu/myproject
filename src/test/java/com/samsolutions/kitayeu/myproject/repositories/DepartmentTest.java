@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -22,25 +21,25 @@ public class DepartmentTest {
 
     @BeforeEach
     public void createSomething() {
-        Department createdDepartment1 = new Department("Sales_Department");
+        Department createdDepartment1 = new Department("Sales_Department777");
         departmentRepository.saveAndFlush(createdDepartment1);
         id1 = createdDepartment1.getDepartmentId();
-        Department createdDepartment2 = new Department("Economic");
+        Department createdDepartment2 = new Department("Economic777");
         departmentRepository.saveAndFlush(createdDepartment2);
     }
 
     @Test
     public void readUpdateSomething() {
         Department readDepartment = departmentRepository.findById(id1).get();
-        assertEquals("Sales_Department", readDepartment.getDepartmentName());
-        readDepartment.setDepartmentName("HR");
+        assertEquals("Sales_Department777", readDepartment.getDepartmentName());
+        readDepartment.setDepartmentName("HR777");
         departmentRepository.saveAndFlush(readDepartment);
     }
 
     @AfterEach
     public void deleteSomething() {
         Department deletedDepartment = departmentRepository.findById(id1).get();
-        assertEquals("HR", deletedDepartment.getDepartmentName());
+        assertEquals("HR777", deletedDepartment.getDepartmentName());
         departmentRepository.delete(deletedDepartment);
         assertEquals(1, departmentRepository.findAll().size());
     }

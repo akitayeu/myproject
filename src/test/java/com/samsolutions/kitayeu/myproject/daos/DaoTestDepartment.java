@@ -9,7 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.List;
 
 
 @SpringBootTest
@@ -23,23 +22,23 @@ public class DaoTestDepartment {
     @BeforeEach
     public void createDepartment() {
         Department newDepartment = new Department();
-        newDepartment.setDepartmentName("HR");
+        newDepartment.setDepartmentName("HR111");
         departmentDAO.save(newDepartment);
-        this.id = newDepartment.getDepartmentId();
+        id = newDepartment.getDepartmentId();
     }
 
     @Test
     public void readDepartment() {
-        Department readedDepartment = departmentDAO.getAll().get(this.id);
-        assertEquals("HR", readedDepartment.getDepartmentName());
-        readedDepartment.setDepartmentName("Sales department");
+        Department readedDepartment = departmentDAO.getAll().get(id);
+        assertEquals("HR111", readedDepartment.getDepartmentName());
+        readedDepartment.setDepartmentName("Sales department111");
         departmentDAO.update(readedDepartment);
-        assertEquals("Sales department", readedDepartment.getDepartmentName());
+        assertEquals("Sales department111", readedDepartment.getDepartmentName());
     }
 
     @AfterEach
     public void deleteDepartment() {
-        Department deletedDepartment = departmentDAO.getAll().get(this.id);
+        Department deletedDepartment = departmentDAO.getAll().get(id);
         departmentDAO.delete(deletedDepartment);
         assertEquals(0, departmentDAO.getAll().size());
     }

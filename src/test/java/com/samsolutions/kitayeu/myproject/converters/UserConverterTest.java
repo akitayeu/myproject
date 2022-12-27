@@ -1,0 +1,44 @@
+package com.samsolutions.kitayeu.myproject.converters;
+
+import com.samsolutions.kitayeu.myproject.dtos.UserDto;
+import com.samsolutions.kitayeu.myproject.entities.User;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+@SpringBootTest
+public class UserConverterTest {
+
+
+    @Test
+    public void toEntity() {
+        UserDto userDto = new UserDto();
+        userDto.setUserId(1);
+        userDto.setUserName("Test");
+        userDto.setUserPassword("123");
+        userDto.setUserMail("a@123.gmail");
+        DtoToUserConverter dtoToUserConverter = new DtoToUserConverter();
+        User user = dtoToUserConverter.convert(userDto);
+        assertEquals(user.getUserId(),userDto.getUserId());
+        assertEquals(user.getUserName(),userDto.getUserName());
+        assertEquals(user.getUserPassword(),userDto.getUserPassword());
+        assertEquals(user.getUserMail(),userDto.getUserMail());
+    }
+
+    @Test
+    public void toDto() {
+        User user = new User();
+        user.setUserId(1);
+        user.setUserName("Test");
+        user.setUserPassword("123");
+        user.setUserMail("a@123.gmail");
+        UserToDtoConverter userToDtoConverter = new UserToDtoConverter();
+        UserDto userDto = userToDtoConverter.convert(user);
+        assertEquals(userDto.getUserId(),user.getUserId());
+        assertEquals(userDto.getUserName(),user.getUserName());
+        assertEquals(userDto.getUserPassword(),user.getUserPassword());
+        assertEquals(userDto.getUserMail(),user.getUserMail());
+    }
+
+}

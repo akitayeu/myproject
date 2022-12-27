@@ -2,6 +2,7 @@ package com.samsolutions.kitayeu.myproject.controllers;
 
 import com.samsolutions.kitayeu.myproject.dtos.DepartmentDto;
 import com.samsolutions.kitayeu.myproject.services.DepartmentService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -13,12 +14,14 @@ import org.springframework.web.bind.annotation.*;
 public class DepartmentController {
 
     private DepartmentService departmentService;
+    @Value("${pageSize}")
+    private int pageSize;
     public DepartmentController (DepartmentService departmentService){
         this.departmentService=departmentService;
     }
     @GetMapping()
-    public String readAll(Model model,@RequestParam(defaultValue = "5", required = false) int pageSize,
-                          @RequestParam(defaultValue = "0", required = false) int page) {
+    public String readAll(Model model,@RequestParam(defaultValue = "0", required = false) int page) {
+
         Pageable paging = PageRequest.of(page, pageSize);
         model.addAttribute("departmentDto",departmentService.getAllDepartmentDtos(page));
         return "departments/listofdepartments";

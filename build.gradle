@@ -7,7 +7,6 @@ plugins {
 
 group = 'com.samsolutions.kitayeu'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '17'
 
 repositories {
 	mavenCentral()
@@ -21,6 +20,7 @@ dependencies {
 	implementation 'org.projectlombok:lombok:1.18.24'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
 	implementation 'org.flywaydb:flyway-core'
+	implementation 'org.springframework.security:spring-security-crypto:5.7.3'
 
     compileOnly 'org.projectlombok:lombok:1.18.24'
 

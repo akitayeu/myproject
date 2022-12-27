@@ -6,7 +6,7 @@ import com.samsolutions.kitayeu.myproject.dtos.DepartmentDto;
 import com.samsolutions.kitayeu.myproject.entities.Department;
 import com.samsolutions.kitayeu.myproject.repositories.DepartmentRepository;
 import com.samsolutions.kitayeu.myproject.services.DepartmentService;
-import lombok.Value;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.PageRequest;
@@ -20,7 +20,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class DepartmentServiceImpl implements DepartmentService {
-    private int pageSize=5;
+    @Value("${pageSize}")
+    private int pageSize;
     @Autowired
     private DepartmentRepository departmentRepository;
 

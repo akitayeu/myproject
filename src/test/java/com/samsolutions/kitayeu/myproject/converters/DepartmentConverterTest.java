@@ -14,11 +14,9 @@ public class DepartmentConverterTest {
     @Test
     public void toEntity() {
         DepartmentDto departmentDto = new DepartmentDto();
-  //      departmentDto.setDepartmentId(1);
         departmentDto.setDepartmentName("Test1");
         DtoToDepartmentConverter dtoToDepartmentConverter = new DtoToDepartmentConverter();
         Department department = dtoToDepartmentConverter.convert(departmentDto);
-//        assertEquals(department.getDepartmentId(),departmentDto.getDepartmentId());
         assertEquals(department.getDepartmentName(),departmentDto.getDepartmentName());
     }
 

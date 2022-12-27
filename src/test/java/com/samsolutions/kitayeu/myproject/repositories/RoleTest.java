@@ -7,9 +7,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
-
-import javax.transaction.Transactional;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -25,25 +22,25 @@ public class RoleTest {
 
     @BeforeEach
     public void createSomething() {
-        Role createdRole1 = new Role("Developer");
+        Role createdRole1 = new Role("Developer555");
         roleRepository.saveAndFlush(createdRole1);
         id = createdRole1.getRoleId();
-        Role createdRole2 = new Role("Tester");
+        Role createdRole2 = new Role("Tester555");
         roleRepository.saveAndFlush(createdRole2);
     }
 
     @Test
     public void readUpdateSomething() {
         Role readRole = roleRepository.findById(id).get();
-        assertEquals("Developer", readRole.getRoleName());
-        readRole.setRoleName("PM");
+        assertEquals("Developer555", readRole.getRoleName());
+        readRole.setRoleName("PM555");
         roleRepository.saveAndFlush(readRole);
     }
 
     @AfterEach
     public void deleteSomething() {
         Role deletedRole = roleRepository.findById(id).get();
-        assertEquals("PM", deletedRole.getRoleName());
+        assertEquals("PM555", deletedRole.getRoleName());
         roleRepository.delete(deletedRole);
         assertEquals(1, roleRepository.findAll().size());
     }

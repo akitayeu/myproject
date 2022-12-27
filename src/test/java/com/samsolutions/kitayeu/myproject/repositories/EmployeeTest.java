@@ -3,14 +3,13 @@ package com.samsolutions.kitayeu.myproject.repositories;
 import com.samsolutions.kitayeu.myproject.entities.Department;
 import com.samsolutions.kitayeu.myproject.entities.Employee;
 import com.samsolutions.kitayeu.myproject.entities.Role;
+import com.samsolutions.kitayeu.myproject.entities.User;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 
-import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -25,9 +24,12 @@ public class EmployeeTest {
     private DepartmentRepository departmentRepository;
     @Autowired
     private RoleRepository roleRepository;
+    @Autowired
+    private UserRepository userRepository;
     private Employee employee;
     private Employee employee1;
     private Department department;
+    private User user;
     private Set<Role> roleSet = new HashSet<>();
     private Role role;
     private Role role1;
@@ -35,7 +37,7 @@ public class EmployeeTest {
 
     @BeforeEach
     public void createSomething() {
-        department = new Department("Developer");
+        department = new Department("Developer000");
         departmentRepository.saveAndFlush(department);
         employee = new Employee();
         employee.setFirstname("Aliaksandr");
@@ -45,15 +47,18 @@ public class EmployeeTest {
         employee.setPassportId("B");
         employee.setPassportValidity(LocalDate.of(2025, 11, 14));
         employee.setDepartment(department);
-        role = new Role("trainee");
+            role = new Role("trainee000");
         roleRepository.saveAndFlush(role);
-        role1 = new Role("Tester");
+        role1 = new Role("Tester000");
         roleRepository.saveAndFlush(role1);
         roleSet.add(role);
         roleSet.add(role1);
         employee.setRole(roleSet);
         employeeRepository.saveAndFlush(employee);
         id = employee.getEmployeeId();
+        user =new User("MyUser","MyUser","myuser@gmail.com");
+        user.setUserId(id);
+        userRepository.saveAndFlush(user);
         employee1 = new Employee();
         employee1.setFirstname("Petr");
         employee1.setLastname("Petrov");
