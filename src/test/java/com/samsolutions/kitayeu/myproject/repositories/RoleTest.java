@@ -43,5 +43,6 @@ public class RoleTest {
         assertEquals("PM555", deletedRole.getRoleName());
         roleRepository.delete(deletedRole);
         assertEquals(1, roleRepository.findAll().size());
+        roleRepository.deleteAll();
     }
 }

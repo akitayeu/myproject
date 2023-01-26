@@ -1,9 +1,7 @@
 package com.samsolutions.kitayeu.myproject.daos;
 
 import com.samsolutions.kitayeu.myproject.entities.Department;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;

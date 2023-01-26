@@ -17,6 +17,7 @@ public class RoleConverterTest {
         roleDto.setRoleName("Role1");
         DtoToRoleConverter dtoToRoleConverter = new DtoToRoleConverter();
         Role role = dtoToRoleConverter.convert(roleDto);
+        assert role != null;
         assertEquals(role.getRoleId(), roleDto.getRoleId());
         assertEquals(role.getRoleName(), roleDto.getRoleName());
     }
@@ -28,6 +29,7 @@ public class RoleConverterTest {
         role.setRoleName("Role2");
         RoleToDtoConverter roleToDtoConverter = new RoleToDtoConverter();
         RoleDto roleDto = roleToDtoConverter.convert(role);
+        assert roleDto != null;
         assertEquals(roleDto.getRoleId(), role.getRoleId());
         assertEquals(roleDto.getRoleName(), role.getRoleName());
     }

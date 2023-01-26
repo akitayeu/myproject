@@ -17,6 +17,7 @@ public class DepartmentConverterTest {
         departmentDto.setDepartmentName("Test1");
         DtoToDepartmentConverter dtoToDepartmentConverter = new DtoToDepartmentConverter();
         Department department = dtoToDepartmentConverter.convert(departmentDto);
+        assert department != null;
         assertEquals(department.getDepartmentName(),departmentDto.getDepartmentName());
     }
 
@@ -27,6 +28,7 @@ public class DepartmentConverterTest {
         department.setDepartmentName("Test2");
         DepartmentToDtoConverter departmentToDtoConverter = new DepartmentToDtoConverter();
         DepartmentDto departmentDto = departmentToDtoConverter.convert(department);
+        assert departmentDto != null;
         assertEquals(departmentDto.getDepartmentId(),department.getDepartmentId());
         assertEquals(departmentDto.getDepartmentName(),department.getDepartmentName());
     }

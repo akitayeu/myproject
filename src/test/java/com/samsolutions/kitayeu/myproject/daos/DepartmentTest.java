@@ -7,38 +7,38 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 
 @SpringBootTest
-public class DaoTestDepartment {
+public class DepartmentTest {
 
     @Autowired
     private DepartmentDAO departmentDAO;
-
-    private int id;
 
     @BeforeEach
     public void createDepartment() {
         Department newDepartment = new Department();
         newDepartment.setDepartmentName("HR111");
         departmentDAO.save(newDepartment);
-        id = newDepartment.getDepartmentId();
     }
 
     @Test
     public void readDepartment() {
-        Department readedDepartment = departmentDAO.getAll().get(id);
-        assertEquals("HR111", readedDepartment.getDepartmentName());
-        readedDepartment.setDepartmentName("Sales department111");
-        departmentDAO.update(readedDepartment);
-        assertEquals("Sales department111", readedDepartment.getDepartmentName());
+        Department readDepartment = departmentDAO.getAll().get(0);
+        assertEquals("HR111", readDepartment.getDepartmentName());
+        readDepartment.setDepartmentName("Sales department111");
+        departmentDAO.update(readDepartment);
+        assertEquals("Sales department111", readDepartment.getDepartmentName());
     }
 
     @AfterEach
     public void deleteDepartment() {
-        Department deletedDepartment = departmentDAO.getAll().get(id);
+        Department deletedDepartment = departmentDAO.getAll().get(0);
+        assertEquals("Sales department111", deletedDepartment.getDepartmentName());
         departmentDAO.delete(deletedDepartment);
         assertEquals(0, departmentDAO.getAll().size());
     }

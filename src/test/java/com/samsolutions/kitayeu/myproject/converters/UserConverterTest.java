@@ -14,30 +14,32 @@ public class UserConverterTest {
     @Test
     public void toEntity() {
         UserDto userDto = new UserDto();
-        userDto.setUserId(1);
+        userDto.setUserId(0);
         userDto.setUserName("Test");
-        userDto.setUserPassword("123");
+        userDto.setUserPasswordHash("123");
         userDto.setUserMail("a@123.gmail");
         DtoToUserConverter dtoToUserConverter = new DtoToUserConverter();
         User user = dtoToUserConverter.convert(userDto);
+        assert user != null;
         assertEquals(user.getUserId(),userDto.getUserId());
         assertEquals(user.getUserName(),userDto.getUserName());
-        assertEquals(user.getUserPassword(),userDto.getUserPassword());
+        assertEquals(user.getUserPasswordHash(),userDto.getUserPasswordHash());
         assertEquals(user.getUserMail(),userDto.getUserMail());
     }
 
     @Test
     public void toDto() {
         User user = new User();
-        user.setUserId(1);
+        user.setUserId(0);
         user.setUserName("Test");
-        user.setUserPassword("123");
+        user.setUserPasswordHash("123");
         user.setUserMail("a@123.gmail");
         UserToDtoConverter userToDtoConverter = new UserToDtoConverter();
         UserDto userDto = userToDtoConverter.convert(user);
+        assert userDto != null;
         assertEquals(userDto.getUserId(),user.getUserId());
         assertEquals(userDto.getUserName(),user.getUserName());
-        assertEquals(userDto.getUserPassword(),user.getUserPassword());
+        assertEquals(userDto.getUserPasswordHash(),user.getUserPasswordHash());
         assertEquals(userDto.getUserMail(),user.getUserMail());
     }
 

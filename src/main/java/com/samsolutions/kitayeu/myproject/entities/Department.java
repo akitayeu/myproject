@@ -16,7 +16,7 @@ public class Department {
     @Id
     @SequenceGenerator(name = "department_id_seq", sequenceName = "department_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "department_id_seq")
-    private int departmentId;
+    private Integer departmentId;
     private String departmentName;
 
     public Department(String departmentName) {

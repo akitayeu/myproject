@@ -4,7 +4,7 @@ import com.samsolutions.kitayeu.myproject.dtos.EmployeeDto;
 import com.samsolutions.kitayeu.myproject.dtos.RoleDto;
 import com.samsolutions.kitayeu.myproject.entities.Employee;
 import com.samsolutions.kitayeu.myproject.entities.Role;
-import com.sun.istack.NotNull;
+import lombok.NonNull;
 import org.springframework.beans.BeanUtils;
 import org.springframework.core.convert.converter.Converter;
 
@@ -14,7 +14,7 @@ import java.util.Set;
 public class EmployeeToDtoConverter implements Converter<Employee, EmployeeDto> {
 
     @Override
-    public EmployeeDto convert(@NotNull Employee employee) {
+    public EmployeeDto convert(@NonNull Employee employee) {
         EmployeeDto employeeDto = new EmployeeDto();
         BeanUtils.copyProperties(employee, employeeDto);
         DepartmentToDtoConverter departmentToDtoConverter = new DepartmentToDtoConverter();

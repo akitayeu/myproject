@@ -7,25 +7,27 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 @Getter
 @Setter
 @NoArgsConstructor
 public class User {
     @Id
-
-    private int userId;
+    @Column(name = "employee_id")
+    private Integer userId;
     private String userName;
-    private String userPassword;
+    @Column(name = "user_password")
+    private String userPasswordHash;
     private String userMail;
 
-    @OneToOne (fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @MapsId
-    private Employee employee;
+    @JoinColumn(name = "employee_id")
+    Employee employee;
 
-    public User(String userName, String userPassword, String userMail) {
+    public User(String userName, String userMail, String userPasswordHash) {
         this.userName = userName;
-        this.userPassword = userPassword;
         this.userMail = userMail;
+        this.userPasswordHash = userPasswordHash;
     }
 }

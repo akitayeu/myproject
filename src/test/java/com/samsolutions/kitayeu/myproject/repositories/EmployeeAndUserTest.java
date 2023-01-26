@@ -17,28 +17,27 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-public class EmployeeTest {
+public class EmployeeAndUserTest {
     @Autowired
     private EmployeeRepository employeeRepository;
     @Autowired
     private DepartmentRepository departmentRepository;
     @Autowired
     private RoleRepository roleRepository;
+
     @Autowired
     private UserRepository userRepository;
     private Employee employee;
     private Employee employee1;
     private Department department;
-    private User user;
     private Set<Role> roleSet = new HashSet<>();
-    private Role role;
-    private Role role1;
-    private int id;
+
 
     @BeforeEach
     public void createSomething() {
-        department = new Department("Developer000");
+        department = new Department("Development");
         departmentRepository.saveAndFlush(department);
+        User user = new User("usertest","mailtest@gmail.com","testpassword");
         employee = new Employee();
         employee.setFirstname("Aliaksandr");
         employee.setLastname("Kitayeu");
@@ -47,19 +46,18 @@ public class EmployeeTest {
         employee.setPassportId("B");
         employee.setPassportValidity(LocalDate.of(2025, 11, 14));
         employee.setDepartment(department);
-            role = new Role("trainee000");
+        Role role = new Role("trainee000");
         roleRepository.saveAndFlush(role);
-        role1 = new Role("Tester000");
+        Role role1 = new Role("Tester000");
         roleRepository.saveAndFlush(role1);
         roleSet.add(role);
         roleSet.add(role1);
         employee.setRole(roleSet);
+        employee.setUser(user);
         employeeRepository.saveAndFlush(employee);
-        id = employee.getEmployeeId();
-        user =new User("MyUser","MyUser","myuser@gmail.com");
-        user.setUserId(id);
         userRepository.saveAndFlush(user);
         employee1 = new Employee();
+        User user1 = new User("usertest1","mailtest1@gmail.com","testpassword");
         employee1.setFirstname("Petr");
         employee1.setLastname("Petrov");
         employee1.setBirthdate(LocalDate.of(1990, 01, 01));
@@ -68,24 +66,31 @@ public class EmployeeTest {
         employee1.setPassportValidity(LocalDate.of(2023, 10, 14));
         employee1.setDepartment(department);
         employee1.setRole(roleSet);
+        employee1.setUser(user1);
         employeeRepository.saveAndFlush(employee1);
+        userRepository.saveAndFlush(user1);
     }
 
     @Test
     public void readUpdateSomething() {
-        Employee readEmployee = employeeRepository.findById(id).get();
+        Employee readEmployee = employeeRepository.findById(employee.getEmployeeId()).get();
         assertEquals("Kitayeu", readEmployee.getLastname());
         readEmployee.setLastname("Ivanov");
-        employeeRepository.save(readEmployee);
+        employeeRepository.saveAndFlush(readEmployee);
     }
 
     @AfterEach
     public void deleteSomething() {
-        Employee deletedEmployee = employeeRepository.findById(id).get();
+        Employee deletedEmployee = employeeRepository.findById(employee.getEmployeeId()).get();
         assertEquals("Ivanov", deletedEmployee.getLastname());
         employeeRepository.delete(deletedEmployee);
         assertEquals(1, employeeRepository.findAll().size());
         assertEquals(1, departmentRepository.findAll().size());
         assertEquals(2, roleRepository.findAll().size());
+        assertEquals(1, userRepository.findAll().size());
+        employeeRepository.deleteAll();
+        departmentRepository.deleteAll();
+        roleRepository.deleteAll();
+        userRepository.deleteAll();
     }
 }

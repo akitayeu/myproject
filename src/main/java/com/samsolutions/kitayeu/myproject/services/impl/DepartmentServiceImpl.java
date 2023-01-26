@@ -4,6 +4,7 @@ import com.samsolutions.kitayeu.myproject.converters.DepartmentToDtoConverter;
 import com.samsolutions.kitayeu.myproject.converters.DtoToDepartmentConverter;
 import com.samsolutions.kitayeu.myproject.dtos.DepartmentDto;
 import com.samsolutions.kitayeu.myproject.entities.Department;
+import com.samsolutions.kitayeu.myproject.exceptions.EntityDuplicateException;
 import com.samsolutions.kitayeu.myproject.repositories.DepartmentRepository;
 import com.samsolutions.kitayeu.myproject.services.DepartmentService;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,7 +15,6 @@ import org.springframework.data.domain.Pageable;
 
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,23 +30,18 @@ public class DepartmentServiceImpl implements DepartmentService {
     public DepartmentDto createDepartmentDto(DepartmentDto departmentDto) {
         DtoToDepartmentConverter dtoToDepartmentConverter = new DtoToDepartmentConverter();
         DepartmentToDtoConverter departmentToDtoConverter = new DepartmentToDtoConverter();
-        String departmentNameFromDto = departmentDto.getDepartmentName();
-        List<String> departmentNameFromDatabase = new ArrayList<>();
-        List<Department> departmentList = departmentRepository.findAll();
-        for (Department department : departmentList) {
-            departmentNameFromDatabase.add(departmentToDtoConverter.convert(department).getDepartmentName());
-        }
-        if (departmentNameFromDatabase.contains(departmentNameFromDto)) {
-            return departmentDto;
+        Department createdDepartment = new DtoToDepartmentConverter().convert(departmentDto);
+        if (departmentRepository.existsByDepartmentName(createdDepartment.getDepartmentName())) {
+            throw new EntityDuplicateException("1000");
         } else {
-            Department createdDepartment = departmentRepository.save(dtoToDepartmentConverter.convert(departmentDto));
+            departmentRepository.save(dtoToDepartmentConverter.convert(departmentDto));
             return departmentToDtoConverter.convert(createdDepartment);
         }
     }
 
     @Override
     public List<DepartmentDto> getAllDepartmentDtos(int page) {
-        Pageable paging = PageRequest.of(page,pageSize);
+        Pageable paging = PageRequest.of(page, pageSize);
         DepartmentToDtoConverter departmentToDtoConverter = new DepartmentToDtoConverter();
         return departmentRepository.findAll(paging).stream()
                 .map(departmentToDtoConverter::convert)
@@ -64,16 +59,12 @@ public class DepartmentServiceImpl implements DepartmentService {
     public DepartmentDto updateDepartmentDto(DepartmentDto departmentDto, int id) {
         DtoToDepartmentConverter dtoToDepartmentConverter = new DtoToDepartmentConverter();
         DepartmentToDtoConverter departmentToDtoConverter = new DepartmentToDtoConverter();
-        departmentDto.setDepartmentId(id);
-        List<String> departmentNameFromDatabase = new ArrayList<>();
-        List<Department> departmentList = departmentRepository.findAll();
-        for (Department department : departmentList) {
-            departmentNameFromDatabase.add(departmentToDtoConverter.convert(department).getDepartmentName());
-        }
-        if (departmentNameFromDatabase.contains(dtoToDepartmentConverter.convert(departmentDto).getDepartmentName())) {
-            return null;
+        Department updatedDepartment = new DtoToDepartmentConverter().convert(departmentDto);
+        if (departmentRepository.existsByDepartmentName(updatedDepartment.getDepartmentName())) {
+            throw new EntityDuplicateException("1000");
         } else {
-            Department updatedDepartment = departmentRepository.save(dtoToDepartmentConverter.convert(departmentDto));
+            departmentDto.setDepartmentId(id);
+            departmentRepository.save(dtoToDepartmentConverter.convert(departmentDto));
             return departmentToDtoConverter.convert(updatedDepartment);
         }
     }

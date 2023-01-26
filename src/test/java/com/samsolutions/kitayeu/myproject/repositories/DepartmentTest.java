@@ -42,5 +42,6 @@ public class DepartmentTest {
         assertEquals("HR777", deletedDepartment.getDepartmentName());
         departmentRepository.delete(deletedDepartment);
         assertEquals(1, departmentRepository.findAll().size());
+        departmentRepository.deleteAll();
     }
 }

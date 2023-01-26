@@ -7,7 +7,7 @@ import java.util.Set;
 @Data
 public class EmployeeDto {
 
-    private int employeeId;
+    private Integer employeeId;
     private String firstname;
     private String lastname;
     private DepartmentDto departmentDto;

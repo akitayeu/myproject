@@ -34,7 +34,7 @@ public class HelloControllerTest {
 								.with(csrf()))
 				.andExpect(status().isOk())
 				.andExpect(content().string(
-						equalTo("<!DOCTYPE html>\r\n<html>\r\n<head>\r\n<meta charset=\"UTF-8\">\r\n<title>My page</title>\r\n</head>\r\n<body>\r\n\tHello,\r\n\t<span>Александр!</span>\r\n</body>\r\n</html>")));
+						equalTo("<!DOCTYPE html>\r\n<html>\r\n<head>\r\n<meta charset=\"UTF-8\">\r\n<title>My page</title>\r\n</head>\r\n<body>\r\n\t<h1>Hello,\r\n\t\t<span>Александр!</span></h1>\r\n\t<br/>\r\n\t<br/>\r\n\t<a href=\"/departments\">List of departments</a>\r\n\t<br/>\r\n\t<br/>\r\n\t<a href=\"/roles\">List of roles</a>\r\n\t<br/>\r\n\t<br/>\r\n\t<a href=\"/employees\">List of employees</a>\r\n</body>\r\n</html>")));
 	}
 
 	@Test

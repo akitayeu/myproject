@@ -17,7 +17,7 @@ public class Employee {
     @Id
     @SequenceGenerator(name = "employee_id_seq", sequenceName = "employee_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "employee_id_seq")
-    private int employeeId;
+    private Integer employeeId;
     private String firstname;
     private String lastname;
     private LocalDate birthdate;
@@ -32,6 +32,10 @@ public class Employee {
     @JoinColumn(name = "department_Id")
     private Department department;
 
+    @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private User user;
+
     public Employee(String firstname, String lastname, LocalDate birthdate, char gender, String passportId,
                     LocalDate passportValidity) {
         this.firstname = firstname;
@@ -40,6 +44,11 @@ public class Employee {
         this.gender = gender;
         this.passportId = passportId;
         this.passportValidity = passportValidity;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+        this.user.setEmployee(this);
     }
 
 }

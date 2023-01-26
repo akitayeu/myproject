@@ -1,8 +1,7 @@
 package com.samsolutions.kitayeu.myproject.converters;
 
-import com.samsolutions.kitayeu.myproject.dtos.DepartmentDto;
+
 import com.samsolutions.kitayeu.myproject.dtos.EmployeeDto;
-import com.samsolutions.kitayeu.myproject.dtos.RoleDto;
 import com.samsolutions.kitayeu.myproject.entities.Department;
 import com.samsolutions.kitayeu.myproject.entities.Employee;
 import com.samsolutions.kitayeu.myproject.entities.Role;
@@ -39,6 +38,7 @@ public class EmployeeConverterTest {
         employee.setRole(roleSet);
         EmployeeToDtoConverter employeeToDtoConverter = new EmployeeToDtoConverter();
         EmployeeDto employeeDto = employeeToDtoConverter.convert(employee);
+        assert employeeDto != null;
         assertEquals(employeeDto.getEmployeeId(), employeeDto.getEmployeeId());
         assertEquals(employeeDto.getFirstname(), employeeDto.getFirstname());
         assertEquals(employeeDto.getLastname(), employeeDto.getLastname());
