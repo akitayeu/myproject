@@ -23,7 +23,7 @@ public class DepartmentController {
     public String readAll(Model model,@RequestParam(defaultValue = "0", required = false) int page) {
 
         Pageable paging = PageRequest.of(page, pageSize);
-        model.addAttribute("departmentDto",departmentService.getAllDepartmentDtos(page));
+        model.addAttribute("departmentDto",departmentService.getAllDepartments(page));
         return "departments/listofdepartments";
     }
 
@@ -41,7 +41,7 @@ public class DepartmentController {
 
     @PostMapping()
     public String createDepartment(@ModelAttribute("departmentDto") DepartmentDto departmentDto){
-        departmentService.createDepartmentDto(departmentDto);
+        departmentService.createDepartment(departmentDto);
         return "redirect:/departments";
     }
 
@@ -59,7 +59,7 @@ public class DepartmentController {
 
     @PatchMapping("/{id}")
     public String updateDepartment(@ModelAttribute("departmentDto") DepartmentDto departmentDto, @PathVariable("id") int id){
-        departmentService.updateDepartmentDto(departmentDto,id);
+        departmentService.updateDepartment(departmentDto,id);
         return "redirect:/departments";
     }
 }

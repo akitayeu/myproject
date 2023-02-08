@@ -28,7 +28,7 @@ public class DepartmentTest {
 
     @Test
     public void readDepartment() {
-        Department readDepartment = departmentDAO.getAll().get(0);
+        Department readDepartment = departmentDAO.getAll().get(1);
         assertEquals("HR111", readDepartment.getDepartmentName());
         readDepartment.setDepartmentName("Sales department111");
         departmentDAO.update(readDepartment);
@@ -37,9 +37,9 @@ public class DepartmentTest {
 
     @AfterEach
     public void deleteDepartment() {
-        Department deletedDepartment = departmentDAO.getAll().get(0);
+        Department deletedDepartment = departmentDAO.getAll().get(1);
         assertEquals("Sales department111", deletedDepartment.getDepartmentName());
         departmentDAO.delete(deletedDepartment);
-        assertEquals(0, departmentDAO.getAll().size());
+        assertEquals(1, departmentDAO.getAll().size());
     }
 }

@@ -20,7 +20,7 @@ public class User {
     private String userPasswordHash;
     private String userMail;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @MapsId
     @JoinColumn(name = "employee_id")
     Employee employee;

@@ -12,6 +12,7 @@ public class UserToDtoConverter implements Converter<User, UserDto> {
     public UserDto convert(@NonNull User user) {
         UserDto userDto = new UserDto();
         BeanUtils.copyProperties(user, userDto);
+        userDto.setUserPasswordHash("");
         return userDto;
     }
 }

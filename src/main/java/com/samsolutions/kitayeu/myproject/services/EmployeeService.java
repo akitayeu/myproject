@@ -5,13 +5,13 @@ import com.samsolutions.kitayeu.myproject.dtos.EmployeeDto;
 import java.util.List;
 
 public interface EmployeeService {
-    EmployeeDto createEmployeeDto(EmployeeDto employeeDto);
+    EmployeeDto createEmployee(EmployeeDto employeeDto);
 
-    List<EmployeeDto> getAllEmployeeDtos();
+    List<EmployeeDto> getAllEmployees();
 
     void deleteEmployee(int id);
 
-    EmployeeDto updateEmployeeDto(EmployeeDto employeeDto);
+    EmployeeDto updateEmployee(EmployeeDto employeeDto);
 
     EmployeeDto getById(int id);
 }

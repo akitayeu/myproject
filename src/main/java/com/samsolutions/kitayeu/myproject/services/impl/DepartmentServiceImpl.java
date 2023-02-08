@@ -4,8 +4,11 @@ import com.samsolutions.kitayeu.myproject.converters.DepartmentToDtoConverter;
 import com.samsolutions.kitayeu.myproject.converters.DtoToDepartmentConverter;
 import com.samsolutions.kitayeu.myproject.dtos.DepartmentDto;
 import com.samsolutions.kitayeu.myproject.entities.Department;
+import com.samsolutions.kitayeu.myproject.entities.Employee;
+import com.samsolutions.kitayeu.myproject.exceptions.DeleteOrChangeEntityNotAllowException;
 import com.samsolutions.kitayeu.myproject.exceptions.EntityDuplicateException;
 import com.samsolutions.kitayeu.myproject.repositories.DepartmentRepository;
+import com.samsolutions.kitayeu.myproject.repositories.EmployeeRepository;
 import com.samsolutions.kitayeu.myproject.services.DepartmentService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +27,16 @@ public class DepartmentServiceImpl implements DepartmentService {
     private int pageSize;
     @Autowired
     private DepartmentRepository departmentRepository;
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
     @Override
     @Transactional
-    public DepartmentDto createDepartmentDto(DepartmentDto departmentDto) {
+    public DepartmentDto createDepartment(DepartmentDto departmentDto) {
         DtoToDepartmentConverter dtoToDepartmentConverter = new DtoToDepartmentConverter();
         DepartmentToDtoConverter departmentToDtoConverter = new DepartmentToDtoConverter();
         Department createdDepartment = new DtoToDepartmentConverter().convert(departmentDto);
+        assert createdDepartment != null;
         if (departmentRepository.existsByDepartmentName(createdDepartment.getDepartmentName())) {
             throw new EntityDuplicateException("1000");
         } else {
@@ -40,7 +46,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public List<DepartmentDto> getAllDepartmentDtos(int page) {
+    public List<DepartmentDto> getAllDepartments(int page) {
         Pageable paging = PageRequest.of(page, pageSize);
         DepartmentToDtoConverter departmentToDtoConverter = new DepartmentToDtoConverter();
         return departmentRepository.findAll(paging).stream()
@@ -51,21 +57,39 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     @Transactional
     public void deleteDepartment(int id) {
-        departmentRepository.deleteById(id);
+        if (id != 0) {
+            if (employeeRepository.findEmployeesByDepartment(departmentRepository.findById(id).orElse(null)).size() != 0) {
+                List<Employee> employeeList = employeeRepository.findEmployeesByDepartment(departmentRepository.findById(id).get());
+                for (Employee employee : employeeList) {
+                    employee.setDepartment(departmentRepository.findById(0).get());
+                    employeeRepository.save(employee);
+                }
+                departmentRepository.deleteById(id);
+            } else {
+                departmentRepository.deleteById(id);
+            }
+        } else {
+            throw new DeleteOrChangeEntityNotAllowException("2000");
+        }
     }
 
     @Override
     @Transactional
-    public DepartmentDto updateDepartmentDto(DepartmentDto departmentDto, int id) {
+    public DepartmentDto updateDepartment(DepartmentDto departmentDto, int id) {
         DtoToDepartmentConverter dtoToDepartmentConverter = new DtoToDepartmentConverter();
         DepartmentToDtoConverter departmentToDtoConverter = new DepartmentToDtoConverter();
         Department updatedDepartment = new DtoToDepartmentConverter().convert(departmentDto);
-        if (departmentRepository.existsByDepartmentName(updatedDepartment.getDepartmentName())) {
-            throw new EntityDuplicateException("1000");
+        if (id != 0) {
+            assert updatedDepartment != null;
+            if (departmentRepository.existsByDepartmentName(updatedDepartment.getDepartmentName())) {
+                throw new EntityDuplicateException("1000");
+            } else {
+                departmentDto.setDepartmentId(id);
+                departmentRepository.save(dtoToDepartmentConverter.convert(departmentDto));
+                return departmentToDtoConverter.convert(updatedDepartment);
+            }
         } else {
-            departmentDto.setDepartmentId(id);
-            departmentRepository.save(dtoToDepartmentConverter.convert(departmentDto));
-            return departmentToDtoConverter.convert(updatedDepartment);
+            throw new DeleteOrChangeEntityNotAllowException("2000");
         }
     }
 

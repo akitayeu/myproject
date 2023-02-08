@@ -11,7 +11,16 @@ public class DtoToUserConverter implements Converter<UserDto, User> {
     @Override
     public User convert(@NonNull UserDto userDto) {
         User user = new User();
-        BeanUtils.copyProperties(userDto, user);
+        BeanUtils.copyProperties(userDto, user, "userPasswordHash");
+        if (userDto.getUserPasswordHash() != null) {
+            if (!userDto.getUserPasswordHash().isBlank()) {
+                user.setUserPasswordHash(userDto.getUserPasswordHash());
+                return user;
+            }
+        } else {
+            user.setUserPasswordHash("");
+            return user;
+        }
         return user;
     }
 }

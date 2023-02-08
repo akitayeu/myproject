@@ -14,7 +14,7 @@ public class UserConverterTest {
     @Test
     public void toEntity() {
         UserDto userDto = new UserDto();
-        userDto.setUserId(0);
+        userDto.setUserId(1);
         userDto.setUserName("Test");
         userDto.setUserPasswordHash("123");
         userDto.setUserMail("a@123.gmail");
@@ -30,7 +30,7 @@ public class UserConverterTest {
     @Test
     public void toDto() {
         User user = new User();
-        user.setUserId(0);
+        user.setUserId(1);
         user.setUserName("Test");
         user.setUserPasswordHash("123");
         user.setUserMail("a@123.gmail");
@@ -39,7 +39,7 @@ public class UserConverterTest {
         assert userDto != null;
         assertEquals(userDto.getUserId(),user.getUserId());
         assertEquals(userDto.getUserName(),user.getUserName());
-        assertEquals(userDto.getUserPasswordHash(),user.getUserPasswordHash());
+        assertEquals(userDto.getUserPasswordHash(),"");
         assertEquals(userDto.getUserMail(),user.getUserMail());
     }
 

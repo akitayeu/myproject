@@ -25,6 +25,8 @@ public class EmployeeToDtoConverter implements Converter<Employee, EmployeeDto> 
             roleDtoSet.add(roleToDtoConverter.convert(role));
         }
         employeeDto.setRoleDtoSet(roleDtoSet);
+        UserToDtoConverter userToDtoConverter = new UserToDtoConverter();
+        employeeDto.setUserDto(userToDtoConverter.convert(employee.getUser()));
         return employeeDto;
     }
 

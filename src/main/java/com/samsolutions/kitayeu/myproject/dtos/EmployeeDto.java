@@ -12,6 +12,7 @@ public class EmployeeDto {
     private String lastname;
     private DepartmentDto departmentDto;
     private Set<RoleDto> roleDtoSet;
+    private UserDto userDto;
 
 }
 

@@ -31,13 +31,18 @@ public class EmployeeAndUserTest {
     private Employee employee1;
     private Department department;
     private Set<Role> roleSet = new HashSet<>();
+    private Role role;
+    private Role role1;
+
+    private User user;
+    private User user1;
 
 
     @BeforeEach
     public void createSomething() {
         department = new Department("Development");
         departmentRepository.saveAndFlush(department);
-        User user = new User("usertest","mailtest@gmail.com","testpassword");
+        user = new User("usertest", "mailtest@gmail.com", "testpassword");
         employee = new Employee();
         employee.setFirstname("Aliaksandr");
         employee.setLastname("Kitayeu");
@@ -46,9 +51,9 @@ public class EmployeeAndUserTest {
         employee.setPassportId("B");
         employee.setPassportValidity(LocalDate.of(2025, 11, 14));
         employee.setDepartment(department);
-        Role role = new Role("trainee000");
+        role = new Role("trainee000");
         roleRepository.saveAndFlush(role);
-        Role role1 = new Role("Tester000");
+        role1 = new Role("Tester000");
         roleRepository.saveAndFlush(role1);
         roleSet.add(role);
         roleSet.add(role1);
@@ -57,7 +62,7 @@ public class EmployeeAndUserTest {
         employeeRepository.saveAndFlush(employee);
         userRepository.saveAndFlush(user);
         employee1 = new Employee();
-        User user1 = new User("usertest1","mailtest1@gmail.com","testpassword");
+        user1 = new User("usertest1", "mailtest1@gmail.com", "testpassword");
         employee1.setFirstname("Petr");
         employee1.setLastname("Petrov");
         employee1.setBirthdate(LocalDate.of(1990, 01, 01));
@@ -81,16 +86,20 @@ public class EmployeeAndUserTest {
 
     @AfterEach
     public void deleteSomething() {
-        Employee deletedEmployee = employeeRepository.findById(employee.getEmployeeId()).get();
-        assertEquals("Ivanov", deletedEmployee.getLastname());
-        employeeRepository.delete(deletedEmployee);
+        employeeRepository.delete(employee);
+        employeeRepository.delete(employee1);
         assertEquals(1, employeeRepository.findAll().size());
-        assertEquals(1, departmentRepository.findAll().size());
+        assertEquals(2, departmentRepository.findAll().size());
         assertEquals(2, roleRepository.findAll().size());
         assertEquals(1, userRepository.findAll().size());
-        employeeRepository.deleteAll();
-        departmentRepository.deleteAll();
-        roleRepository.deleteAll();
-        userRepository.deleteAll();
+        departmentRepository.delete(department);
+        roleRepository.delete(role);
+        roleRepository.delete(role1);
+        userRepository.delete(user);
+        userRepository.delete(user1);
+        assertEquals(1, employeeRepository.findAll().size());
+        assertEquals(1, departmentRepository.findAll().size());
+        assertEquals(0, roleRepository.findAll().size());
+        assertEquals(1, userRepository.findAll().size());
     }
 }

@@ -6,13 +6,13 @@ import com.samsolutions.kitayeu.myproject.dtos.RoleDto;
 import java.util.List;
 
 public interface RoleService {
-    RoleDto createRoleDto(RoleDto roleDto);
+    RoleDto createRole(RoleDto roleDto);
 
-    List<RoleDto> getAllRoleDtos();
+    List<RoleDto> getAllRole();
 
     void deleteRole(int id);
 
-    RoleDto updateRoleDto(RoleDto roleDto);
+    RoleDto updateRole(RoleDto roleDto);
 
     RoleDto getById(int id);
 }

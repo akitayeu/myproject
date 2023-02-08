@@ -19,13 +19,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     @Transactional
-    public EmployeeDto createEmployeeDto(EmployeeDto employeeDto) {
+    public EmployeeDto createEmployee(EmployeeDto employeeDto) {
 
         return employeeDto;
     }
 
     @Override
-    public List<EmployeeDto> getAllEmployeeDtos() {
+    public List<EmployeeDto> getAllEmployees() {
 
         EmployeeToDtoConverter employeeToDtoConverter = new EmployeeToDtoConverter();
         List<EmployeeDto> employeeDtoList = new ArrayList<>();
@@ -44,7 +44,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     @Transactional
-    public EmployeeDto updateEmployeeDto(EmployeeDto employeeDto) {
+    public EmployeeDto updateEmployee(EmployeeDto employeeDto) {
 
         return employeeDto;
     }

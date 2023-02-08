@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 @SpringBootTest
@@ -18,6 +19,7 @@ public class DepartmentTest {
     @Autowired
     private DepartmentRepository departmentRepository;
     private int id1;
+    private int id2;
 
     @BeforeEach
     public void createSomething() {
@@ -26,6 +28,7 @@ public class DepartmentTest {
         id1 = createdDepartment1.getDepartmentId();
         Department createdDepartment2 = new Department("Economic777");
         departmentRepository.saveAndFlush(createdDepartment2);
+        id2 = createdDepartment2.getDepartmentId();
     }
 
     @Test
@@ -38,10 +41,11 @@ public class DepartmentTest {
 
     @AfterEach
     public void deleteSomething() {
-        Department deletedDepartment = departmentRepository.findById(id1).get();
-        assertEquals("HR777", deletedDepartment.getDepartmentName());
-        departmentRepository.delete(deletedDepartment);
-        assertEquals(1, departmentRepository.findAll().size());
-        departmentRepository.deleteAll();
+        Department deletedDepartment1 = departmentRepository.findById(id1).get();
+        Department deletedDepartment2 = departmentRepository.findById(id2).get();
+        departmentRepository.delete(deletedDepartment1);
+        departmentRepository.delete(deletedDepartment2);
+        assertTrue(departmentRepository.findById(id1).isEmpty());
+        assertTrue(departmentRepository.findById(id2).isEmpty());
     }
 }

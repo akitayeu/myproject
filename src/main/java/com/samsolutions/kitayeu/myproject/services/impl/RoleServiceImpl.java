@@ -22,7 +22,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     @Transactional
-    public RoleDto createRoleDto(RoleDto roleDto) {
+    public RoleDto createRole(RoleDto roleDto) {
         RoleToDtoConverter roleToDtoConverter = new RoleToDtoConverter();
         DtoToRoleConverter dtoToRoleConverter = new DtoToRoleConverter();
         Role createdRole = roleRepository.save(dtoToRoleConverter.convert(roleDto));
@@ -30,7 +30,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public List<RoleDto> getAllRoleDtos() {
+    public List<RoleDto> getAllRole() {
         RoleToDtoConverter roleToDtoConverter = new RoleToDtoConverter();
         List<RoleDto> roleDtoList = new ArrayList<>();
         List<Role> roleList = roleRepository.findAll();
@@ -49,7 +49,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     @Transactional
-    public RoleDto updateRoleDto(RoleDto roleDto) {
+    public RoleDto updateRole(RoleDto roleDto) {
         RoleToDtoConverter roleToDtoConverter = new RoleToDtoConverter();
         DtoToRoleConverter dtoToRoleConverter = new DtoToRoleConverter();
         Role updatedRole = roleRepository.save(dtoToRoleConverter.convert(roleDto));

@@ -5,6 +5,7 @@ import com.samsolutions.kitayeu.myproject.dtos.EmployeeDto;
 import com.samsolutions.kitayeu.myproject.entities.Department;
 import com.samsolutions.kitayeu.myproject.entities.Employee;
 import com.samsolutions.kitayeu.myproject.entities.Role;
+import com.samsolutions.kitayeu.myproject.entities.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -36,6 +37,8 @@ public class EmployeeConverterTest {
         employee.setLastname("Lastname1");
         employee.setDepartment(department);
         employee.setRole(roleSet);
+        User user = new User("MyUser","mymail@gmail.com","");
+        employee.setUser(user);
         EmployeeToDtoConverter employeeToDtoConverter = new EmployeeToDtoConverter();
         EmployeeDto employeeDto = employeeToDtoConverter.convert(employee);
         assert employeeDto != null;
