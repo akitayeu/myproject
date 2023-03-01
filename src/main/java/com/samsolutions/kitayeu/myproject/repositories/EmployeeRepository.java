@@ -10,4 +10,8 @@ import java.util.List;
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
     List<Employee> findEmployeesByDepartment(Department department);
+
+    Boolean existsEmployeeByEmployeeId (Integer id);
+
+    Boolean existsEmployeeByPassportId (String passportId);
     }

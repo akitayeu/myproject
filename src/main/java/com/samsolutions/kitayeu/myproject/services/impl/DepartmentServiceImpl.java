@@ -69,7 +69,7 @@ public class DepartmentServiceImpl implements DepartmentService {
                 departmentRepository.deleteById(id);
             }
         } else {
-            throw new DeleteOrChangeEntityNotAllowException("2000");
+            throw new DeleteOrChangeEntityNotAllowException("1001");
         }
     }
 
@@ -89,7 +89,7 @@ public class DepartmentServiceImpl implements DepartmentService {
                 return departmentToDtoConverter.convert(updatedDepartment);
             }
         } else {
-            throw new DeleteOrChangeEntityNotAllowException("2000");
+            throw new DeleteOrChangeEntityNotAllowException("1001");
         }
     }
 

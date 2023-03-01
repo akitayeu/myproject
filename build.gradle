@@ -7,6 +7,7 @@ plugins {
 
 group = 'com.samsolutions.kitayeu'
 version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
 
 repositories {
 	mavenCentral()
@@ -16,14 +17,13 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'	
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.projectlombok:lombok:1.18.24'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
 	implementation 'org.flywaydb:flyway-core'
-	implementation 'org.springframework.security:spring-security-crypto:5.7.3'
 	implementation 'org.apache.commons:commons-lang3:3.12.0'
 
-    compileOnly 'org.projectlombok:lombok:1.18.24'
+	compileOnly 'org.projectlombok:lombok:1.18.24'
 
 	annotationProcessor 'org.projectlombok:lombok:1.18.24'
 
@@ -34,7 +34,7 @@ dependencies {
 	testRuntimeOnly 'com.h2database:h2'
 	testRuntimeOnly 'org.projectlombok:lombok:1.18.24'
 	testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
-	
+
 }
 
 tasks.named('test') {

@@ -60,39 +60,41 @@ public class UserServiceImpl implements UserService {
         DtoToUserConverter dtoToUserConverter = new DtoToUserConverter();
         User updatedUser = dtoToUserConverter.convert(userDto);
         if (id == 0) {  // userId=0 is reserved and can`t be changed
-            throw new DeleteOrChangeEntityNotAllowException("2000");
+            throw new DeleteOrChangeEntityNotAllowException("1001");
         }
         if (updatedUser.getUserId() != null) {
             if (id != updatedUser.getUserId()) { // userId can`t be changed
-                throw new UserIdChangeNotAllowException("2001");
+                throw new UserIdChangeNotAllowException("1005");
             }
         }
         User readUser = userRepository.findById(id).orElse(null);
         if (readUser == null) {
-            throw new UserNotFoundException("3001");
+            throw new UserNotFoundException("1008");
         } else {
-            if (updatedUser.getUserName() != null & updatedUser.getUserMail() != null) {
-                if (userRepository.existsUserByUserName(updatedUser.getUserName())) {
+            if (updatedUser.getUserName() != null & updatedUser.getUserMail() != null) {  //userName and UserMail from DTO isn`t null
+                if (userRepository.existsUserByUserName(updatedUser.getUserName())) {    // check userName
                     if (userRepository.findUserByUserName(updatedUser.getUserName()).getUserId() != id) {
-                        throw new UserNameDuplicateException("1001");
-                    } else if (userRepository.existsUserByUserMail(updatedUser.getUserMail())) {
-                        if (userRepository.findUserByUserMail(updatedUser.getUserMail()).getUserId() != id) {
-                            throw new UserMailDuplicateException("1002");
+                        throw new UserNameDuplicateException("1007");
+                    } else {
+                        if (userRepository.existsUserByUserMail(updatedUser.getUserMail())) {  //check UserMail when Username is OK
+                            if (userRepository.findUserByUserMail(updatedUser.getUserMail()).getUserId() != id) {
+                                throw new UserMailDuplicateException("1006");
+                            } else {
+                                updatedUser.setUserId(id);
+                                updatedUser.setUserPasswordHash(readUser.getUserPasswordHash());
+                                userRepository.saveAndFlush(updatedUser);
+                                return true;
+                            }
                         } else {
                             updatedUser.setUserId(id);
                             updatedUser.setUserPasswordHash(readUser.getUserPasswordHash());
                             userRepository.saveAndFlush(updatedUser);
                             return true;
                         }
-                    } else {
-                        updatedUser.setUserId(id);
-                        updatedUser.setUserPasswordHash(readUser.getUserPasswordHash());
-                        userRepository.saveAndFlush(updatedUser);
-                        return true;
                     }
-                } else if (userRepository.existsUserByUserMail(updatedUser.getUserMail())) {
+                } else if (userRepository.existsUserByUserMail(updatedUser.getUserMail())) {  //check UserMail when Username is OK
                     if (userRepository.findUserByUserMail(updatedUser.getUserMail()).getUserId() != id) {
-                        throw new UserMailDuplicateException("1002");
+                        throw new UserMailDuplicateException("1006");
                     } else {
                         updatedUser.setUserId(id);
                         updatedUser.setUserPasswordHash(readUser.getUserPasswordHash());
@@ -105,10 +107,10 @@ public class UserServiceImpl implements UserService {
                     userRepository.saveAndFlush(updatedUser);
                     return true;
                 }
-            } else if (updatedUser.getUserName() == null & updatedUser.getUserMail() != null) {
+            } else if (updatedUser.getUserName() == null & updatedUser.getUserMail() != null) {  //userName from DTO is null but UserMail isn`t null
                 if (userRepository.existsUserByUserMail(updatedUser.getUserMail())) {
                     if (userRepository.findUserByUserMail(updatedUser.getUserMail()).getUserId() != id) {
-                        throw new UserMailDuplicateException("1002");
+                        throw new UserMailDuplicateException("1006");
                     } else {
                         updatedUser.setUserId(id);
                         updatedUser.setUserPasswordHash(readUser.getUserPasswordHash());
@@ -123,10 +125,10 @@ public class UserServiceImpl implements UserService {
                     userRepository.saveAndFlush(updatedUser);
                     return true;
                 }
-            } else if (updatedUser.getUserMail() == null & updatedUser.getUserName() != null) {
+            } else if (updatedUser.getUserMail() == null & updatedUser.getUserName() != null) { //userName from DTO isn`t null, UserMail is null
                 if (userRepository.existsUserByUserName(updatedUser.getUserName())) {
                     if (userRepository.findUserByUserName(updatedUser.getUserName()).getUserId() != id) {
-                        throw new UserNameDuplicateException("1001");
+                        throw new UserNameDuplicateException("1007");
                     } else {
                         updatedUser.setUserId(id);
                         updatedUser.setUserPasswordHash(readUser.getUserPasswordHash());
@@ -142,7 +144,7 @@ public class UserServiceImpl implements UserService {
                     return true;
                 }
             } else {
-                return false;
+                return false;  // UserName and UserMail from DTO are null
             }
         }
     }

@@ -7,11 +7,13 @@ import java.util.List;
 public interface EmployeeService {
     EmployeeDto createEmployee(EmployeeDto employeeDto);
 
-    List<EmployeeDto> getAllEmployees();
+    List<EmployeeDto> getAllEmployees(int page);
 
-    void deleteEmployee(int id);
+    Boolean deleteEmployee(int id);
 
-    EmployeeDto updateEmployee(EmployeeDto employeeDto);
+    Boolean updateEmployee(EmployeeDto employeeDto, int id);
 
     EmployeeDto getById(int id);
+
+    List<EmployeeDto> getEmployeeByDepartment (String departmentName);
 }
