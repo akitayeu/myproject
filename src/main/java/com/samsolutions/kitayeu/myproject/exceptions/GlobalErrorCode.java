@@ -11,5 +11,7 @@ public class GlobalErrorCode {
     public static final String ERROR_DEPARTMENT_NOT_FOUND = "Department not found";
     public static final String ERROR_EMPLOYEE_NOT_FOUND = "Employee not found";
     public static final String ERROR_ROLE_NOT_FOUND = "Role not found";
+    public static final String ERROR_GENDER_WRONG = "Gender is wrong";
+    public static final String ERROR_INVALID_DATA = "Invalid data";
 
 }

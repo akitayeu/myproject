@@ -12,7 +12,7 @@ import java.util.List;
 @RequestMapping("/api")
 public class EmployeeRestController {
 
-    private EmployeeService employeeService;
+    private final EmployeeService employeeService;
 
     public EmployeeRestController(EmployeeService employeeService) {
         this.employeeService = employeeService;
@@ -46,7 +46,6 @@ public class EmployeeRestController {
     @DeleteMapping(value = "/employees/{id}")
     public ResponseEntity<?> deleteEmployee(@PathVariable(name = "id") int id) {
         final boolean deleted = employeeService.deleteEmployee(id);
-
         return deleted
                 ? new ResponseEntity<>(HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -55,7 +54,6 @@ public class EmployeeRestController {
     @PutMapping(value = "/employees/{id}")
     public ResponseEntity<?> updateEmployee(@RequestBody EmployeeDto employeeDto, @PathVariable(name = "id") int id) {
         final Boolean updated = employeeService.updateEmployee(employeeDto, id);
-
         return updated
                 ? new ResponseEntity<>(HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
@@ -63,7 +61,9 @@ public class EmployeeRestController {
 
     @PostMapping(value = "/employees")
     public ResponseEntity<?> createEmployee(@RequestBody EmployeeDto employeeDto) {
-        employeeService.createEmployee(employeeDto);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        final EmployeeDto createdEmployee= employeeService.createEmployee(employeeDto);
+        return createdEmployee!=null
+                ? new ResponseEntity<>(HttpStatus.CREATED)
+                : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }

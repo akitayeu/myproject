@@ -8,11 +8,11 @@ import java.util.List;
 public interface RoleService {
     RoleDto createRole(RoleDto roleDto);
 
-    List<RoleDto> getAllRole();
+    List<RoleDto> getAllRole(int page);
 
-    void deleteRole(int id);
+    boolean deleteRole(int id);
 
-    RoleDto updateRole(RoleDto roleDto);
+    boolean updateRole(RoleDto roleDto, int id);
 
     RoleDto getById(int id);
 }

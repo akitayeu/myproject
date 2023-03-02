@@ -1,6 +1,5 @@
 package com.samsolutions.kitayeu.myproject.dtos;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -18,7 +17,6 @@ public class EmployeeDto {
     private LocalDate passportValidity;
     private DepartmentDto departmentDto;
     private Set<RoleDto> roleDtoSet;
-    @JsonIgnore
     private UserDto userDto;
 
 }

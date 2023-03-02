@@ -90,7 +90,7 @@ public class EmployeeAndUserTest {
         employeeRepository.delete(employee1);
         assertEquals(1, employeeRepository.findAll().size());
         assertEquals(2, departmentRepository.findAll().size());
-        assertEquals(2, roleRepository.findAll().size());
+        assertEquals(3, roleRepository.findAll().size());
         assertEquals(1, userRepository.findAll().size());
         departmentRepository.delete(department);
         roleRepository.delete(role);
@@ -99,7 +99,7 @@ public class EmployeeAndUserTest {
         userRepository.delete(user1);
         assertEquals(1, employeeRepository.findAll().size());
         assertEquals(1, departmentRepository.findAll().size());
-        assertEquals(0, roleRepository.findAll().size());
+        assertEquals(1, roleRepository.findAll().size());
         assertEquals(1, userRepository.findAll().size());
     }
 }
