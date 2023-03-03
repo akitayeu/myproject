@@ -81,7 +81,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Transactional
     public Boolean deleteEmployee(int id) {
         if (id == 0) { // userId can`t be changed
-            throw new UserIdChangeNotAllowException("1005");
+            throw new IdMismatchException("1005");
         } else {
             if (employeeRepository.existsEmployeeByEmployeeId(id)) {
                 employeeRepository.deleteById(id);
@@ -103,7 +103,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         if (updatedEmployee.getEmployeeId() != null) {
             if (id != updatedEmployee.getEmployeeId()) { // EmployeeId can`t be changed
-                throw new UserIdChangeNotAllowException("1005");
+                throw new IdMismatchException("1005");
             }
         }
 
@@ -267,7 +267,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             if (employeeDto.getUserDto().getUserPassword() == null || employeeDto.getUserDto().getUserPassword().isBlank()) {
                 throw new InvalidDataExceptionException("1012");
             } else {
-              receiveUser.setUserPasswordHash(encoder.encode(employeeDto.getUserDto().getUserPassword()));
+                receiveUser.setUserPasswordHash(encoder.encode(employeeDto.getUserDto().getUserPassword()));
             }
             createdEmployee.setUser(receiveUser);
         }

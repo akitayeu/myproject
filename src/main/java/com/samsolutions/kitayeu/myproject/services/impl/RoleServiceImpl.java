@@ -7,6 +7,7 @@ import com.samsolutions.kitayeu.myproject.entities.Employee;
 import com.samsolutions.kitayeu.myproject.entities.Role;
 import com.samsolutions.kitayeu.myproject.exceptions.DeleteOrChangeEntityNotAllowException;
 import com.samsolutions.kitayeu.myproject.exceptions.EntityDuplicateException;
+import com.samsolutions.kitayeu.myproject.exceptions.IdMismatchException;
 import com.samsolutions.kitayeu.myproject.repositories.EmployeeRepository;
 import com.samsolutions.kitayeu.myproject.repositories.RoleRepository;
 import com.samsolutions.kitayeu.myproject.services.RoleService;
@@ -62,18 +63,32 @@ public class RoleServiceImpl implements RoleService {
     @Transactional
     public boolean deleteRole(int id) {
         if (id != 0) {
-            if (employeeRepository.findEmployeesByRole(roleRepository.findById(id).orElse(null)).size() != 0) {
-                List<Employee> employeeList = employeeRepository.findEmployeesByRole(roleRepository.findById(id).get());
-                for (Employee employee : employeeList) {
-                    if (employee.getRole().size() == 1) {
-                        Set<Role> roleSet = new HashSet<>();
-                        roleSet.add(roleRepository.findRoleByRoleName("EMPTY"));
-                        employeeRepository.save(employee);
+            if (roleRepository.findById(id).isPresent()) {
+                if (employeeRepository.findEmployeesByRole(roleRepository.findById(id).orElse(null)).size() != 0) {
+                    List<Employee> employeeList = employeeRepository.findEmployeesByRole(roleRepository.findById(id).get());
+                    for (Employee employee : employeeList) {
+                        if (employee.getRole().size() == 1) {
+                            Set<Role> roleSet = new HashSet<>();
+                            roleSet.add(roleRepository.findRoleByRoleName("EMPTY"));
+                            employee.setRole(roleSet);
+                            employeeRepository.save(employee);
+                        } else {
+                            Set<Role> roleSetFromDb = employee.getRole();
+                            Set<Role> roleSet = new HashSet<>();
+                            for (Role role : roleSetFromDb) {
+                                if (role.getRoleId() != id) {
+
+                                    roleSet.add(role);
+                                }
+                            }
+                            employee.setRole(roleSet);
+                        }
                     }
                 }
                 roleRepository.deleteById(id);
+            } else {
+                return false;
             }
-            roleRepository.deleteById(id);
         } else {
             throw new DeleteOrChangeEntityNotAllowException("1001");
         }
@@ -84,15 +99,24 @@ public class RoleServiceImpl implements RoleService {
     @Transactional
     public boolean updateRole(RoleDto roleDto, int id) {
         if (id != 0) {
-            DtoToRoleConverter dtoToRoleConverter = new DtoToRoleConverter();
-            Role updatedRole = dtoToRoleConverter.convert(roleDto);
-            assert updatedRole != null;
-            if (roleRepository.existsRoleByRoleName(updatedRole.getRoleName())) {
-                throw new EntityDuplicateException("1000");
+            if (roleRepository.findById(id).isPresent()) {
+                DtoToRoleConverter dtoToRoleConverter = new DtoToRoleConverter();
+                Role updatedRole = dtoToRoleConverter.convert(roleDto);
+                assert updatedRole != null;
+                if (updatedRole.getRoleId() != null) {
+                    if (id != updatedRole.getRoleId()) { // ID mismatch
+                        throw new IdMismatchException("1005");
+                    }
+                }
+                if (roleRepository.existsRoleByRoleName(updatedRole.getRoleName())) {
+                    throw new EntityDuplicateException("1000");
+                } else {
+                    updatedRole.setRoleId(id);
+                    roleRepository.save(updatedRole);
+                    return true;
+                }
             } else {
-                roleDto.setRoleId(id);
-                roleRepository.save(dtoToRoleConverter.convert(roleDto));
-                return true;
+                return false;
             }
         } else {
             throw new DeleteOrChangeEntityNotAllowException("1001");
@@ -102,6 +126,10 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public RoleDto getById(int id) {
         RoleToDtoConverter roleToDtoConverter = new RoleToDtoConverter();
-        return roleToDtoConverter.convert(roleRepository.getReferenceById(id));
+        if (roleRepository.findById(id).isPresent()) {
+            return roleToDtoConverter.convert(roleRepository.findById(id).get());
+        } else {
+            return null;
+        }
     }
 }

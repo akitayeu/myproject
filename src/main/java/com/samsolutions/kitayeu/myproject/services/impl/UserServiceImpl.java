@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
         }
         if (updatedUser.getUserId() != null) {
             if (id != updatedUser.getUserId()) { // userId can`t be changed
-                throw new UserIdChangeNotAllowException("1005");
+                throw new IdMismatchException("1005");
             }
         }
         User readUser = userRepository.findById(id).orElse(null);

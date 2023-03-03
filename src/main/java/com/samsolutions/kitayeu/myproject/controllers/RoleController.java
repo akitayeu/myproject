@@ -11,13 +11,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/roles")
 public class RoleController {
 
-    private RoleService roleService;
-    public RoleController(RoleService roleService){
-        this.roleService=roleService;
+    private final RoleService roleService;
+
+    public RoleController(RoleService roleService) {
+        this.roleService = roleService;
     }
+
     @GetMapping()
-    public String readAll(Model model, @RequestParam(defaultValue = "0", required = false) int page){
-        model.addAttribute("roleDto",roleService.getAllRole(page));
+    public String readAll(Model model, @RequestParam(defaultValue = "0", required = false) int page) {
+        model.addAttribute("roleDto", roleService.getAllRole(page));
         return "roles/listofroles";
     }
 }

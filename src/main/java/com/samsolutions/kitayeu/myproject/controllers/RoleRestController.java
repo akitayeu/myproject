@@ -44,7 +44,7 @@ public class RoleRestController {
 
     @PutMapping(value = "/roles/{id}")
     public ResponseEntity<?> updateRole(@RequestBody RoleDto roleDto, @PathVariable(name = "id") int id) {
-        final Boolean updated = roleService.updateRole(roleDto, id);
+        final boolean updated = roleService.updateRole(roleDto, id);
         return updated
                 ? new ResponseEntity<>(HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
@@ -52,8 +52,8 @@ public class RoleRestController {
 
     @PostMapping(value = "/roles")
     public ResponseEntity<?> createRole(@RequestBody RoleDto roleDto) {
-        final RoleDto createdRole= roleService.createRole(roleDto);
-        return createdRole!=null
+        final RoleDto createdRole = roleService.createRole(roleDto);
+        return createdRole != null
                 ? new ResponseEntity<>(HttpStatus.CREATED)
                 : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }

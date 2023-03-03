@@ -56,13 +56,13 @@ public class EmployeeRestController {
         final Boolean updated = employeeService.updateEmployee(employeeDto, id);
         return updated
                 ? new ResponseEntity<>(HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping(value = "/employees")
     public ResponseEntity<?> createEmployee(@RequestBody EmployeeDto employeeDto) {
-        final EmployeeDto createdEmployee= employeeService.createEmployee(employeeDto);
-        return createdEmployee!=null
+        final EmployeeDto createdEmployee = employeeService.createEmployee(employeeDto);
+        return createdEmployee != null
                 ? new ResponseEntity<>(HttpStatus.CREATED)
                 : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
