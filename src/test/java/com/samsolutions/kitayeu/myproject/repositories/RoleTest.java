@@ -1,6 +1,5 @@
 package com.samsolutions.kitayeu.myproject.repositories;
 
-
 import com.samsolutions.kitayeu.myproject.entities.Role;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,7 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-
 @SpringBootTest
 public class RoleTest {
 
@@ -20,6 +18,7 @@ public class RoleTest {
     private RoleRepository roleRepository;
 
     private int id1;
+
     private int id2;
 
     @BeforeEach

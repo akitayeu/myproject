@@ -10,7 +10,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 public class DepartmentConverterTest {
 
-
     @Test
     public void toEntity() {
         DepartmentDto departmentDto = new DepartmentDto();

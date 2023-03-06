@@ -13,6 +13,7 @@ import org.springframework.security.provisioning.UserDetailsManager;
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 

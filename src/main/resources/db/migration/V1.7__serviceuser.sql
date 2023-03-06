@@ -10,7 +10,3 @@ VALUES (0,'admin','','admin@gmail.com');
 
 INSERT INTO role
 VALUES (0,'EMPTY');
-
-
-
-

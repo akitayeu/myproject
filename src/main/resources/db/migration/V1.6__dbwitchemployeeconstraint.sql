@@ -6,5 +6,3 @@ ALTER TABLE IF EXISTS public.employee
 
 ALTER TABLE IF EXISTS public.employee
     add column passport_id text NOT NULL;
-
-

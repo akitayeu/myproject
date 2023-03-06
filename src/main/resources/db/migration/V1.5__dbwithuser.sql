@@ -10,9 +10,3 @@ CREATE TABLE IF NOT EXISTS public.users
     CONSTRAINT user_unique_name UNIQUE (user_name),
     CONSTRAINT user_unique_mail UNIQUE (user_mail)
 );
-
-
-
-
-
-

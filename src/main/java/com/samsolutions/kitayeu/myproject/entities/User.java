@@ -12,12 +12,16 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 public class User {
+
     @Id
     @Column(name = "employee_id")
     private Integer userId;
+
     private String userName;
+
     @Column(name = "user_password")
     private String userPasswordHash;
+
     private String userMail;
 
     @OneToOne

@@ -31,6 +31,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Value("${pageSize}")
     private int pageSize;
+
     @Autowired
     private EmployeeRepository employeeRepository;
 
@@ -172,6 +173,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         updatedEmployee.setEmployeeId(id);
         updatedEmployee.setUser(readEmployee.getUser());
         employeeRepository.save(updatedEmployee);
+
         return true;
     }
 

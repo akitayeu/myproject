@@ -19,7 +19,7 @@ public class EmployeeRestController {
     }
 
     @GetMapping("/employees/page={page}")
-    final ResponseEntity<List<EmployeeDto>> readAllEmployees(@PathVariable(name = "page") int page) {
+    public ResponseEntity<List<EmployeeDto>> readAllEmployees(@PathVariable(name = "page") int page) {
         final List<EmployeeDto> employeeDtoList = employeeService.getAllEmployees(page);
         return employeeDtoList != null && !employeeDtoList.isEmpty()
                 ? new ResponseEntity<>(employeeDtoList, HttpStatus.OK)

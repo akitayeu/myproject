@@ -2,7 +2,7 @@ package com.samsolutions.kitayeu.myproject.services.impl;
 
 
 import com.samsolutions.kitayeu.myproject.converters.DtoToUserConverter;
-import com.samsolutions.kitayeu.myproject.converters.UserToDtoConverter;
+import com.samsolutions.kitayeu.myproject.converters.UserToUserDtoConverter;
 import com.samsolutions.kitayeu.myproject.dtos.UserDto;
 import com.samsolutions.kitayeu.myproject.entities.User;
 import com.samsolutions.kitayeu.myproject.exceptions.*;
@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDto> getAllUsers(int page) {
         Pageable paging = PageRequest.of(page, pageSize);
-        UserToDtoConverter userToDtoConverter = new UserToDtoConverter();
+        UserToUserDtoConverter userToDtoConverter = new UserToUserDtoConverter();
         return userRepository.findAll(paging).stream()
                 .map(userToDtoConverter::convert)
                 .collect(Collectors.toList());
@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDto> getAllUsers() {
-        UserToDtoConverter userToDtoConverter = new UserToDtoConverter();
+        UserToUserDtoConverter userToDtoConverter = new UserToUserDtoConverter();
         return userRepository.findAll().stream()
                 .map(userToDtoConverter::convert)
                 .collect(Collectors.toList());
@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto getUserById(int id) {
-        UserToDtoConverter userToDtoConverter = new UserToDtoConverter();
+        UserToUserDtoConverter userToDtoConverter = new UserToUserDtoConverter();
         if (userRepository.findById(id).isPresent()) {
             return userToDtoConverter.convert(userRepository.findById(id).get());
         } else {
@@ -149,22 +149,3 @@ public class UserServiceImpl implements UserService {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

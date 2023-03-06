@@ -16,7 +16,7 @@ public class DepartmentController {
         this.departmentService = departmentService;
     }
 
-    @GetMapping()
+    @GetMapping
     public String readAll(Model model, @RequestParam(defaultValue = "0", required = false) int page) {
         model.addAttribute("departmentDto", departmentService.getAllDepartments(page));
         return "departments/listofdepartments";
@@ -34,7 +34,7 @@ public class DepartmentController {
         return "departments/new";
     }
 
-    @PostMapping()
+    @PostMapping
     public String createDepartment(@ModelAttribute("departmentDto") DepartmentDto departmentDto) {
         departmentService.createDepartment(departmentDto);
         return "redirect:/departments";

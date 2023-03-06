@@ -16,7 +16,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addConverter(new DtoToRoleConverter());
         registry.addConverter(new EmployeeToDtoConverter());
         registry.addConverter(new DtoToUserConverter());
-        registry.addConverter(new UserToDtoConverter());
+        registry.addConverter(new UserToUserDtoConverter());
         registry.addConverter(new DtoToEmployeeConverter());
     }
 }

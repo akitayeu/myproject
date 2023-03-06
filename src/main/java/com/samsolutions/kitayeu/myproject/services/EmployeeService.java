@@ -5,6 +5,7 @@ import com.samsolutions.kitayeu.myproject.dtos.EmployeeDto;
 import java.util.List;
 
 public interface EmployeeService {
+
     EmployeeDto createEmployee(EmployeeDto employeeDto);
 
     List<EmployeeDto> getAllEmployees(int page);

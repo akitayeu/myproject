@@ -23,10 +23,13 @@ import java.util.stream.Collectors;
 
 @Service
 public class DepartmentServiceImpl implements DepartmentService {
+
     @Value("${pageSize}")
     private int pageSize;
+
     @Autowired
     private DepartmentRepository departmentRepository;
+
     @Autowired
     private EmployeeRepository employeeRepository;
 
@@ -36,7 +39,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         DtoToDepartmentConverter dtoToDepartmentConverter = new DtoToDepartmentConverter();
         DepartmentToDtoConverter departmentToDtoConverter = new DepartmentToDtoConverter();
         Department createdDepartment = new DtoToDepartmentConverter().convert(departmentDto);
-        assert createdDepartment != null;
+
         if (departmentRepository.existsByDepartmentName(createdDepartment.getDepartmentName())) {
             throw new EntityDuplicateException("1000");
         } else {
@@ -80,7 +83,6 @@ public class DepartmentServiceImpl implements DepartmentService {
         DepartmentToDtoConverter departmentToDtoConverter = new DepartmentToDtoConverter();
         Department updatedDepartment = new DtoToDepartmentConverter().convert(departmentDto);
         if (id != 0) {
-            assert updatedDepartment != null;
             if (departmentRepository.existsByDepartmentName(updatedDepartment.getDepartmentName())) {
                 throw new EntityDuplicateException("1000");
             } else {

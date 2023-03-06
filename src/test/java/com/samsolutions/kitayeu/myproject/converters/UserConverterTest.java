@@ -10,7 +10,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 public class UserConverterTest {
 
-
     @Test
     public void toEntity() {
         UserDto userDto = new UserDto();
@@ -34,7 +33,7 @@ public class UserConverterTest {
         user.setUserName("Test");
         user.setUserPasswordHash("123");
         user.setUserMail("a@123.gmail");
-        UserToDtoConverter userToDtoConverter = new UserToDtoConverter();
+        UserToUserDtoConverter userToDtoConverter = new UserToUserDtoConverter();
         UserDto userDto = userToDtoConverter.convert(user);
         assert userDto != null;
         assertEquals(userDto.getUserId(),user.getUserId());

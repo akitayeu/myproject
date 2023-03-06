@@ -9,14 +9,23 @@ import java.util.Set;
 public class EmployeeDto {
 
     private Integer employeeId;
+
     private String firstname;
+
     private String lastname;
+
     private LocalDate birthdate;
+
     private char gender;
+
     private String passportId;
+
     private LocalDate passportValidity;
+
     private DepartmentDto departmentDto;
+
     private Set<RoleDto> roleDtoSet;
+
     private UserDto userDto;
 
 }

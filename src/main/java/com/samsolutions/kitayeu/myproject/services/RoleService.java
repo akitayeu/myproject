@@ -6,6 +6,7 @@ import com.samsolutions.kitayeu.myproject.dtos.RoleDto;
 import java.util.List;
 
 public interface RoleService {
+
     RoleDto createRole(RoleDto roleDto);
 
     List<RoleDto> getAllRole(int page);

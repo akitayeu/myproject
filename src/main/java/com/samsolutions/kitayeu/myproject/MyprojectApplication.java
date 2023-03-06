@@ -20,25 +20,23 @@ public class MyprojectApplication {
     }
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @PostConstruct
     public void createAdminPassword() {
-        if (userRepository.findById(0).isPresent()) {
-            User userAdmin = userRepository.findById(0).orElse(null);
-            if (userAdmin != null && userAdmin.getUserPasswordHash().isBlank()) {
-                int length = 10;
-                boolean useLetters = true;
-                boolean useNumbers = true;
-                String generatedPassword = RandomStringUtils.random(length, useLetters, useNumbers);
-                System.out.println("Remember generated password for user admin: " + generatedPassword);
-                String passwordHash = passwordEncoder.encode(generatedPassword);
-                userAdmin.setUserPasswordHash(passwordHash);
-                userRepository.saveAndFlush(userAdmin);
-            }
+        if (userRepository.findById(0).isPresent() && userRepository.findById(0).get().getUserPasswordHash().isBlank()) {
+            User userAdmin = userRepository.findById(0).get();
+            final int LENGTH = 10;
+            boolean useLetters = true;
+            boolean useNumbers = true;
+            String generatedPassword = RandomStringUtils.random(LENGTH, useLetters, useNumbers);
+            System.out.println("Remember generated password for user admin: " + generatedPassword);
+            String passwordHash = passwordEncoder.encode(generatedPassword);
+            userAdmin.setUserPasswordHash(passwordHash);
+            userRepository.saveAndFlush(userAdmin);
         }
     }
 

@@ -18,25 +18,34 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 public class EmployeeAndUserTest {
+
     @Autowired
     private EmployeeRepository employeeRepository;
+
     @Autowired
     private DepartmentRepository departmentRepository;
+
     @Autowired
     private RoleRepository roleRepository;
 
     @Autowired
     private UserRepository userRepository;
+
     private Employee employee;
+
     private Employee employee1;
+
     private Department department;
+
     private Set<Role> roleSet = new HashSet<>();
+
     private Role role;
+
     private Role role1;
 
     private User user;
-    private User user1;
 
+    private User user1;
 
     @BeforeEach
     public void createSomething() {

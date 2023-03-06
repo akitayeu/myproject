@@ -14,6 +14,7 @@ import java.util.function.Consumer;
 
 @Repository
 public class DepartmentDAO implements DAO<Department> {
+
     @PersistenceContext
     private EntityManager entityManager;
 

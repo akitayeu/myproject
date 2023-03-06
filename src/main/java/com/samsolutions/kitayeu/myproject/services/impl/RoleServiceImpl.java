@@ -28,6 +28,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Value("${pageSize}")
     private int pageSize;
+
     @Autowired
     private RoleRepository roleRepository;
 
@@ -40,7 +41,6 @@ public class RoleServiceImpl implements RoleService {
         RoleToDtoConverter roleToDtoConverter = new RoleToDtoConverter();
         DtoToRoleConverter dtoToRoleConverter = new DtoToRoleConverter();
         Role createdRole = dtoToRoleConverter.convert(roleDto);
-        assert createdRole != null;
         if (roleRepository.existsRoleByRoleName(createdRole.getRoleName())) {
             throw new EntityDuplicateException("1000");
         } else {
@@ -102,7 +102,6 @@ public class RoleServiceImpl implements RoleService {
             if (roleRepository.findById(id).isPresent()) {
                 DtoToRoleConverter dtoToRoleConverter = new DtoToRoleConverter();
                 Role updatedRole = dtoToRoleConverter.convert(roleDto);
-                assert updatedRole != null;
                 if (updatedRole.getRoleId() != null) {
                     if (id != updatedRole.getRoleId()) { // ID mismatch
                         throw new IdMismatchException("1005");

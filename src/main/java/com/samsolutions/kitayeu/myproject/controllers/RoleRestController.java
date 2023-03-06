@@ -19,7 +19,7 @@ public class RoleRestController {
     }
 
     @GetMapping("/roles/page={page}")
-    final ResponseEntity<List<RoleDto>> readAllRoles(@PathVariable(name = "page") int page) {
+    public ResponseEntity<List<RoleDto>> readAllRoles(@PathVariable(name = "page") int page) {
         final List<RoleDto> roleDtoList = roleService.getAllRole(page);
         return roleDtoList != null && !roleDtoList.isEmpty()
                 ? new ResponseEntity<>(roleDtoList, HttpStatus.OK)
