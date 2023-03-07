@@ -61,8 +61,8 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Transactional
     public void deleteDepartment(int id) {
         if (id != 0) {
-            if (employeeRepository.findEmployeesByDepartment(departmentRepository.findById(id).orElse(null)).size() != 0) {
-                List<Employee> employeeList = employeeRepository.findEmployeesByDepartment(departmentRepository.findById(id).get());
+            List<Employee> employeeList = employeeRepository.findEmployeesByDepartment(departmentRepository.findById(id).get());
+            if (employeeList.size() != 0) {
                 for (Employee employee : employeeList) {
                     employee.setDepartment(departmentRepository.findById(0).get());
                     employeeRepository.save(employee);

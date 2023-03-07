@@ -69,8 +69,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<EmployeeDto> getEmployeeByDepartment(String departmentName) {
         EmployeeToDtoConverter employeeToDtoConverter = new EmployeeToDtoConverter();
-        if (!employeeRepository.findEmployeesByDepartment(departmentRepository.findDepartmentByDepartmentName(departmentName)).isEmpty()) {
-            return employeeRepository.findEmployeesByDepartment(departmentRepository.findDepartmentByDepartmentName(departmentName)).stream()
+        List<Employee> listEmployee = employeeRepository.findEmployeesByDepartment(departmentRepository.findDepartmentByDepartmentName(departmentName));
+        if (!listEmployee.isEmpty()) {
+            return listEmployee.stream()
                     .map(employeeToDtoConverter::convert)
                     .collect(Collectors.toList());
         } else {

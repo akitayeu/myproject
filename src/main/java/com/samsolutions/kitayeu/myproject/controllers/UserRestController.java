@@ -2,6 +2,7 @@ package com.samsolutions.kitayeu.myproject.controllers;
 
 import com.samsolutions.kitayeu.myproject.dtos.UserDto;
 import com.samsolutions.kitayeu.myproject.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,11 +13,8 @@ import java.util.List;
 @RequestMapping("/api")
 public class UserRestController {
 
-    private final UserService userService;
-
-    public UserRestController(UserService userService) {
-        this.userService = userService;
-    }
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/users/page={page}")
     final ResponseEntity<List<UserDto>> readAllUsers(@PathVariable(name = "page") int page) {

@@ -1,6 +1,7 @@
 package com.samsolutions.kitayeu.myproject.controllers;
 
 import com.samsolutions.kitayeu.myproject.services.EmployeeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,11 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/employees")
 public class EmployeeController {
 
+    @Autowired
     private EmployeeService employeeService;
-
-    public EmployeeController(EmployeeService employeeService) {
-        this.employeeService = employeeService;
-    }
 
     @GetMapping()
     public String readAll(Model model, @RequestParam(defaultValue = "0", required = false) int page) {

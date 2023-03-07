@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Value("5")
+    @Value("${pageSize}")
     private int pageSize;
 
     @Autowired
@@ -47,7 +47,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto getUserById(int id) {
         UserToUserDtoConverter userToDtoConverter = new UserToUserDtoConverter();
-        if (userRepository.findById(id).isPresent()) {
+        User user = userRepository.findById(id).orElse(null);
+        if (user!=null) {
             return userToDtoConverter.convert(userRepository.findById(id).get());
         } else {
             return null;

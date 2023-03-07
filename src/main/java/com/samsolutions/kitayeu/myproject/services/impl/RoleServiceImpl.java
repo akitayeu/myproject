@@ -63,9 +63,10 @@ public class RoleServiceImpl implements RoleService {
     @Transactional
     public boolean deleteRole(int id) {
         if (id != 0) {
-            if (roleRepository.findById(id).isPresent()) {
-                if (employeeRepository.findEmployeesByRole(roleRepository.findById(id).orElse(null)).size() != 0) {
-                    List<Employee> employeeList = employeeRepository.findEmployeesByRole(roleRepository.findById(id).get());
+            Role roleFromDb = roleRepository.findById(id).orElse(null);
+            if (roleFromDb!=null) {
+                List<Employee> employeeList = employeeRepository.findEmployeesByRole(roleFromDb);
+                if (employeeList.size()!=0) {
                     for (Employee employee : employeeList) {
                         if (employee.getRole().size() == 1) {
                             Set<Role> roleSet = new HashSet<>();
@@ -125,7 +126,8 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public RoleDto getById(int id) {
         RoleToDtoConverter roleToDtoConverter = new RoleToDtoConverter();
-        if (roleRepository.findById(id).isPresent()) {
+        Role role = roleRepository.findById(id).orElse(null);
+        if (role!=null) {
             return roleToDtoConverter.convert(roleRepository.findById(id).get());
         } else {
             return null;

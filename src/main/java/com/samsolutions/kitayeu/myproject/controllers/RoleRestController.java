@@ -2,6 +2,7 @@ package com.samsolutions.kitayeu.myproject.controllers;
 
 import com.samsolutions.kitayeu.myproject.dtos.RoleDto;
 import com.samsolutions.kitayeu.myproject.services.RoleService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,11 +13,8 @@ import java.util.List;
 @RequestMapping("/api")
 public class RoleRestController {
 
-    private final RoleService roleService;
-
-    public RoleRestController(RoleService roleService) {
-        this.roleService = roleService;
-    }
+    @Autowired
+    private RoleService roleService;
 
     @GetMapping("/roles/page={page}")
     public ResponseEntity<List<RoleDto>> readAllRoles(@PathVariable(name = "page") int page) {

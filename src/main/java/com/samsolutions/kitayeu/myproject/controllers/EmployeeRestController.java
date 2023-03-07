@@ -2,6 +2,7 @@ package com.samsolutions.kitayeu.myproject.controllers;
 
 import com.samsolutions.kitayeu.myproject.dtos.EmployeeDto;
 import com.samsolutions.kitayeu.myproject.services.EmployeeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,11 +13,8 @@ import java.util.List;
 @RequestMapping("/api")
 public class EmployeeRestController {
 
-    private final EmployeeService employeeService;
-
-    public EmployeeRestController(EmployeeService employeeService) {
-        this.employeeService = employeeService;
-    }
+    @Autowired
+    private EmployeeService employeeService;
 
     @GetMapping("/employees/page={page}")
     public ResponseEntity<List<EmployeeDto>> readAllEmployees(@PathVariable(name = "page") int page) {
