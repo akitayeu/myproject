@@ -1,34 +1,45 @@
 package com.samsolutions.kitayeu.myproject;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
+
+import com.samsolutions.kitayeu.myproject.config.PasswordEncoder;
+import com.samsolutions.kitayeu.myproject.entities.User;
+import com.samsolutions.kitayeu.myproject.repositories.UserRepository;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
+
+import javax.annotation.PostConstruct;
+
 
 @SpringBootApplication
-@Slf4j
 public class MyprojectApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(MyprojectApplication.class, args);
     }
 
-    @Bean
-    public MyBeanClass myBeanClass() {
-        log.info("My first bean!");
-        return new MyBeanClass("Hello");
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @PostConstruct
+    public void createAdminPassword() {
+        if (userRepository.findById(0).isPresent() && userRepository.findById(0).get().getUserPasswordHash().isBlank()) {
+            User userAdmin = userRepository.findById(0).get();
+            final int LENGTH = 10;
+            boolean useLetters = true;
+            boolean useNumbers = true;
+            String generatedPassword = RandomStringUtils.random(LENGTH, useLetters, useNumbers);
+            System.out.println("Remember generated password for user admin: " + generatedPassword);
+            String passwordHash = passwordEncoder.encode(generatedPassword);
+            userAdmin.setUserPasswordHash(passwordHash);
+            userRepository.saveAndFlush(userAdmin);
+        }
     }
-}
-
-
-@AllArgsConstructor
-@Getter
-@Setter
-class MyBeanClass {
-
-    private String mytext;
 
 }
+
+

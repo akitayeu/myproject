@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http//thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Department</title>
+</head>
+<body>
+<a th:text="${departmentDto.getDepartmentId()}">VALUE</a>
+<a th:text="${departmentDto.getDepartmentName()}">VALUE</a>
+</div>
+<br/>
+<br/>
+<a th:href="@{/departments/{id}/edit(id=${departmentDto.getDepartmentId()})}">Edit</a>
+<br/>
+<br/>
+<form th:method="DELETE" th:action="@{/departments/{id}(id=${departmentDto.getDepartmentId()})}">
+	<input type="submit" value="Delete">
+</form>
+<hr/>
+<br/>
+<br/>
+<a href="/departments">List of departments</a>
+</body>
+</html>

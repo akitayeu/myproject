@@ -1,37 +1,30 @@
 package com.samsolutions.kitayeu.myproject.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
+
 
 @Entity
-@Table (name="department")
+@Table(name = "department")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Department {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private int departmentId;
+    @SequenceGenerator(name = "department_id_seq", sequenceName = "department_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "department_id_seq")
+    private Integer departmentId;
+
     private String departmentName;
 
-    public Department() {
-    }
-
-    public int getDepartmentId() {
-        return departmentId;
-    }
-
-    public void setDepartmentId(int departmentId) {
-        this.departmentId = departmentId;
-    }
-
-    public String getDepartmentName() {
-        return departmentName;
-    }
-
-    public void setDepartmentName(String departmentName) {
+    public Department(String departmentName) {
         this.departmentName = departmentName;
     }
+
 }
 
 
