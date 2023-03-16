@@ -9,9 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/")
 public class HelloController {
 
-	@GetMapping("/")
+
+	@GetMapping("/api")
 	public String getIndex(Model model) {
-		model.addAttribute("name", "Александр!");
+		model.addAttribute("name", "this is my first spring application");
 		return "hello";
 	}
 }

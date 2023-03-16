@@ -24,14 +24,6 @@ public class UserRestController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/users")
-    public ResponseEntity<List<UserDto>> readAllUsers() {
-        final List<UserDto> userDtoList = userService.getAllUsers();
-        return userDtoList != null && !userDtoList.isEmpty()
-                ? new ResponseEntity<>(userDtoList, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-
     @GetMapping("/users/{id}")
     public ResponseEntity<UserDto> getUserById(@PathVariable(name = "id") int id) {
         final UserDto userDto = userService.getUserById(id);

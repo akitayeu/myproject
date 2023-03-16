@@ -32,7 +32,7 @@ public class RoleRestController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @DeleteMapping(value = "/roles/{id}")
+    @DeleteMapping(value = "/roles/delete/{id}")
     public ResponseEntity<?> deleteRole(@PathVariable(name = "id") int id) {
         final boolean deleted = roleService.deleteRole(id);
         return deleted
@@ -40,7 +40,7 @@ public class RoleRestController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping(value = "/roles/{id}")
+    @PutMapping(value = "/roles/edit/{id}")
     public ResponseEntity<?> updateRole(@RequestBody RoleDto roleDto, @PathVariable(name = "id") int id) {
         final boolean updated = roleService.updateRole(roleDto, id);
         return updated
@@ -48,7 +48,7 @@ public class RoleRestController {
                 : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
 
-    @PostMapping(value = "/roles")
+    @PostMapping(value = "/roles/new")
     public ResponseEntity<?> createRole(@RequestBody RoleDto roleDto) {
         final RoleDto createdRole = roleService.createRole(roleDto);
         return createdRole != null

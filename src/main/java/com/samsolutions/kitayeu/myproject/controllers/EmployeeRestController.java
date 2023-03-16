@@ -41,7 +41,7 @@ public class EmployeeRestController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @DeleteMapping(value = "/employees/{id}")
+    @DeleteMapping(value = "/employees/delete/{id}")
     public ResponseEntity<?> deleteEmployee(@PathVariable(name = "id") int id) {
         final boolean deleted = employeeService.deleteEmployee(id);
         return deleted
@@ -49,7 +49,7 @@ public class EmployeeRestController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping(value = "/employees/{id}")
+    @PutMapping(value = "/employees/edit/{id}")
     public ResponseEntity<?> updateEmployee(@RequestBody EmployeeDto employeeDto, @PathVariable(name = "id") int id) {
         final Boolean updated = employeeService.updateEmployee(employeeDto, id);
         return updated
@@ -57,7 +57,7 @@ public class EmployeeRestController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PostMapping(value = "/employees")
+    @PostMapping(value = "/employees/new")
     public ResponseEntity<?> createEmployee(@RequestBody EmployeeDto employeeDto) {
         final EmployeeDto createdEmployee = employeeService.createEmployee(employeeDto);
         return createdEmployee != null

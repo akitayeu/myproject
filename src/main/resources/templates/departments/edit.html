@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<form th:method="PATCH" th:action="@{/departments/{id}(id=${departmentDto.getDepartmentId()})}" th:object="${departmentDto}">
+<form th:method="PATCH" th:action="@{/api/departments/{id}(id=${departmentDto.getDepartmentId()})}" th:object="${departmentDto}">
 	<label for="departmentName">Enter new department</label>
 	<input type="text" th:field="*{departmentName}" id="departmentName">
 	<br/>
@@ -15,6 +15,6 @@
 <hr/>
 <br/>
 <br/>
-<a href="/departments">List of departments</a>
+<a href="/api/departments">List of departments</a>
 </body>
 </html>
