@@ -1,4 +1,4 @@
-package com.samsolutions.kitayeu.myproject.controllers;
+package com.samsolutions.kitayeu.myproject.controllers.MVC;
 
 import com.samsolutions.kitayeu.myproject.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/api")
+@RequestMapping("/users")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @GetMapping("/users")
+    @GetMapping
     public String readAll(Model model, @RequestParam(defaultValue = "0", required = false) int page) {
         model.addAttribute("userDto", userService.getAllUsers(page));
         return "users/listofusers";

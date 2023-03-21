@@ -1,21 +1,23 @@
 package com.samsolutions.kitayeu.myproject.config;
 
-import com.samsolutions.kitayeu.myproject.services.UserAuthService;
+import com.samsolutions.kitayeu.myproject.services.impl.UserAuthServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 @Configuration
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    UserAuthService userAuthService;
+    UserAuthServiceImpl userAuthService;
 
     /* -In-Memory
     @Bean
@@ -40,24 +42,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests()
-                .antMatchers("/api/departments/new/**").hasAnyRole("ADMIN", "HR")
-                .antMatchers("/api/departments/{id}/**").hasAnyRole("ADMIN", "HR")
-                .antMatchers("/api/departments/**").authenticated()
+                // MVC-controllers
+                .antMatchers("/departments/new/**").hasAnyRole("ADMIN","HR")
+                .antMatchers("/departments/{id}/edit/**").hasAnyRole("ADMIN","HR")
+                .antMatchers("/departments/**").authenticated()
+                .antMatchers("/users/**").hasRole("ADMIN")
+                .antMatchers("/roles/**").authenticated()
+                .antMatchers("/employees/**").authenticated()
+                // REST-controllers
                 .antMatchers("/api/users/**").hasRole("ADMIN")
-                .antMatchers("/api/roles/edit/**").hasAnyRole("ADMIN","HR")
-                .antMatchers("/api/roles/new/**").hasAnyRole("ADMIN","HR")
-                .antMatchers("/api/roles/delete/**").hasAnyRole("ADMIN","HR")
                 .antMatchers("/api/roles/**").authenticated()
-                .antMatchers("/api/employees/department={departmentName}/**").hasAnyRole("ADMIN","HR")
-                .antMatchers("/api/employees/edit/**").hasAnyRole("ADMIN","HR")
-                .antMatchers("/api/employees/new/**").hasAnyRole("ADMIN","HR")
-                .antMatchers("/api/employees/delete/**").hasAnyRole("ADMIN","HR")
                 .antMatchers("/api/employees/**").authenticated()
-                .antMatchers("/api").permitAll()
                 .and()
-                .formLogin().defaultSuccessUrl("/api")
+                .formLogin().defaultSuccessUrl("/")
                 .and()
-                .logout().logoutSuccessUrl("/api");
+                .logout().logoutSuccessUrl("/");
     }
 
     @Bean

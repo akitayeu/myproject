@@ -1,4 +1,4 @@
-package com.samsolutions.kitayeu.myproject.controllers;
+package com.samsolutions.kitayeu.myproject.controllers.REST;
 
 import com.samsolutions.kitayeu.myproject.dtos.UserDto;
 import com.samsolutions.kitayeu.myproject.services.UserService;
@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/users")
 public class UserRestController {
 
     @Autowired
     private UserService userService;
 
-    @GetMapping("/users/page={page}")
+    @GetMapping("/page={page}")
     final ResponseEntity<List<UserDto>> readAllUsers(@PathVariable(name = "page") int page) {
         final List<UserDto> userDtoList = userService.getAllUsers(page);
         return userDtoList != null && !userDtoList.isEmpty()
@@ -24,7 +24,7 @@ public class UserRestController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/users/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<UserDto> getUserById(@PathVariable(name = "id") int id) {
         final UserDto userDto = userService.getUserById(id);
         return userDto != null
@@ -32,7 +32,7 @@ public class UserRestController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping(value = "/users/{id}")
+    @PutMapping(value = "/{id}")
     public ResponseEntity<?> updateUser(@RequestBody UserDto userDto, @PathVariable(name = "id") int id) {
         final Boolean updated = userService.updateUser(userDto, id);
 

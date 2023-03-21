@@ -6,14 +6,14 @@
 </head>
 <body>
 <div th:each="departmentDto : ${departmentDto}">
-	<a th:href="@{/api/departments/{id}(id=${departmentDto.getDepartmentId()})}"  th:text="${departmentDto.getDepartmentName()}">user</a>
+	<a th:href="@{/departments/{id}(id=${departmentDto.getDepartmentId()})}"  th:text="${departmentDto.getDepartmentName()}">user</a>
 </div>
 <hr/>
 <br/>
 <br/>
-<a href="/api/departments/new">Create new department</a>
+<a href="/departments/new">Create new department</a>
 <br/>
 <br/>
-<a href="/api">Homepage</a>
+<a href="/">Homepage</a>
 </body>
 </html>

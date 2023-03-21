@@ -10,15 +10,15 @@
 </div>
 <br/>
 <br/>
-<a th:href="@{/api/departments/{id}/edit(id=${departmentDto.getDepartmentId()})}">Edit</a>
+<a th:href="@{/departments/{id}/edit(id=${departmentDto.getDepartmentId()})}">Edit</a>
 <br/>
 <br/>
-<form th:method="DELETE" th:action="@{/api/departments/{id}(id=${departmentDto.getDepartmentId()})}">
+<form th:method="DELETE" th:action="@{/departments/{id}(id=${departmentDto.getDepartmentId()})}">
 	<input type="submit" value="Delete">
 </form>
 <hr/>
 <br/>
 <br/>
-<a href="/api/departments">List of departments</a>
+<a href="/departments">List of departments</a>
 </body>
 </html>

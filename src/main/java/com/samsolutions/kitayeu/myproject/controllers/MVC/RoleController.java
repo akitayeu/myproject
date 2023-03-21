@@ -1,6 +1,6 @@
-package com.samsolutions.kitayeu.myproject.controllers;
+package com.samsolutions.kitayeu.myproject.controllers.MVC;
 
-import com.samsolutions.kitayeu.myproject.services.EmployeeService;
+import com.samsolutions.kitayeu.myproject.services.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,16 +9,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/api")
-public class EmployeeController {
+@RequestMapping("/roles")
+public class RoleController {
 
     @Autowired
-    private EmployeeService employeeService;
+    private RoleService roleService;
 
-    @GetMapping("/employees")
+    @GetMapping
     public String readAll(Model model, @RequestParam(defaultValue = "0", required = false) int page) {
-        model.addAttribute("employee", employeeService.getAllEmployees(page));
-        return "employees/listofemployees";
+        model.addAttribute("roleDto", roleService.getAllRole(page));
+        return "roles/listofroles";
     }
 }
 
