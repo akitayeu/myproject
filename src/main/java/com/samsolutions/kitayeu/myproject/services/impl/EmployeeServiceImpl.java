@@ -83,7 +83,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Transactional
     public Boolean deleteEmployee(int id) {
         if (id == 0) { // userId can`t be changed
-            throw new IdMismatchException("1005");
+            throw new IdMismatchException("409");
         } else {
             if (employeeRepository.existsEmployeeByEmployeeId(id)) {
                 employeeRepository.deleteById(id);
@@ -101,22 +101,22 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee updatedEmployee = dtoToEmployeeConverter.convert(employeeDto);
 
         if (id == 0) {  // EmployeeId=0 is reserved and can`t be changed
-            throw new DeleteOrChangeEntityNotAllowException("1001");
+            throw new DeleteOrChangeEntityNotAllowException("403");
         }
         if (updatedEmployee.getEmployeeId() != null) {
             if (id != updatedEmployee.getEmployeeId()) { // EmployeeId can`t be changed
-                throw new IdMismatchException("1005");
+                throw new IdMismatchException("409");
             }
         }
 
         Employee readEmployee = employeeRepository.findById(id).orElse(null);
         if (readEmployee == null) {
-            throw new EmployeeNotFoundException("1009");
+            throw new EmployeeNotFoundException("404");
         }
 
         if (employeeDto.getDepartmentDto() != null) {
             if (!departmentRepository.existsByDepartmentName(employeeDto.getDepartmentDto().getDepartmentName())) {
-                throw new DepartmentNotFoundException("1002");
+                throw new DepartmentNotFoundException("404");
             } else {
                 updatedEmployee.setDepartment(departmentRepository.findDepartmentByDepartmentName(employeeDto.getDepartmentDto().getDepartmentName()));
             }
@@ -129,7 +129,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             Set<Role> receiveRoles = new HashSet<>();
             for (RoleDto dtoRole : employeeDto.getRoleDtoSet()) {
                 if (!roleRepository.existsRoleByRoleName(dtoToRoleConverter.convert(dtoRole).getRoleName())) {
-                    throw new RoleNotFoundException("1010");
+                    throw new RoleNotFoundException("404");
                 } else {
                     receiveRoles.add(dtoToRoleConverter.convert(dtoRole));
                 }
@@ -161,7 +161,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         if (updatedEmployee.getPassportId() != null && !updatedEmployee.getPassportId().equals(readEmployee.getPassportId())) {
             if (employeeRepository.existsEmployeeByPassportId(updatedEmployee.getPassportId())) {
-                throw new PassportIdDuplicateException("1004");
+                throw new PassportIdDuplicateException("409");
             }
         } else {
             updatedEmployee.setPassportId(readEmployee.getPassportId());
@@ -185,19 +185,19 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee createdEmployee = dtoToEmployeeConverter.convert(employeeDto);
 
         if (createdEmployee == null) {
-            throw new InvalidDataExceptionException("1012");
+            throw new InvalidDataExceptionException("400");
         }
 
         if (createdEmployee.getFirstname() == null) {
-            throw new InvalidDataExceptionException("1012");
+            throw new InvalidDataExceptionException("400");
         }
 
         if (createdEmployee.getLastname() == null) {
-            throw new InvalidDataExceptionException("1012");
+            throw new InvalidDataExceptionException("400");
         }
 
         if (createdEmployee.getBirthdate() == null) {
-            throw new InvalidDataExceptionException("1012");
+            throw new InvalidDataExceptionException("400");
         }
 
         if (String.valueOf(createdEmployee.getGender()).equalsIgnoreCase("m")) {
@@ -205,19 +205,19 @@ public class EmployeeServiceImpl implements EmployeeService {
         } else if (String.valueOf(createdEmployee.getGender()).equalsIgnoreCase("w")) {
             createdEmployee.setGender('w');
         } else {
-            throw new GenderWrongException("1011");
+            throw new GenderWrongException("400");
         }
 
         if (createdEmployee.getPassportId() == null) {
-            throw new InvalidDataExceptionException("1012");
+            throw new InvalidDataExceptionException("400");
         } else {
             if (employeeRepository.existsEmployeeByPassportId(createdEmployee.getPassportId())) {
-                throw new PassportIdDuplicateException("1004");
+                throw new PassportIdDuplicateException("409");
             }
         }
 
         if (createdEmployee.getPassportValidity() == null) {
-            throw new InvalidDataExceptionException("1012");
+            throw new InvalidDataExceptionException("400");
         }
 
         if (employeeDto.getDepartmentDto() == null) {
@@ -226,7 +226,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             DtoToDepartmentConverter dtoToDepartmentConverter = new DtoToDepartmentConverter();
             Department receiveDepartment = dtoToDepartmentConverter.convert(employeeDto.getDepartmentDto());
             if (!departmentRepository.existsByDepartmentName(receiveDepartment.getDepartmentName())) {
-                throw new DepartmentNotFoundException("1002");
+                throw new DepartmentNotFoundException("404");
             }
             createdEmployee.setDepartment(receiveDepartment);
         }
@@ -240,7 +240,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             Set<Role> receiveRoles = new HashSet<>();
             for (RoleDto dtoRole : employeeDto.getRoleDtoSet()) {
                 if (!roleRepository.existsRoleByRoleName(dtoToRoleConverter.convert(dtoRole).getRoleName())) {
-                    throw new RoleNotFoundException("1010");
+                    throw new RoleNotFoundException("404");
                 } else {
                     receiveRoles.add(dtoToRoleConverter.convert(dtoRole));
                 }
@@ -249,26 +249,26 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
 
         if (employeeDto.getUserDto() == null) {
-            throw new InvalidDataExceptionException("1012");
+            throw new InvalidDataExceptionException("400");
         } else {
             DtoToUserConverter dtoToUserConverter = new DtoToUserConverter();
             User receiveUser = dtoToUserConverter.convert(employeeDto.getUserDto());
             if (receiveUser.getUserName() == null) {
-                throw new InvalidDataExceptionException("1012");
+                throw new InvalidDataExceptionException("400");
             } else {
                 if (userRepository.existsUserByUserName(receiveUser.getUserName())) {
-                    throw new UserNameDuplicateException("1007");
+                    throw new UserNameDuplicateException("409");
                 }
             }
             if (receiveUser.getUserMail() == null) {
-                throw new InvalidDataExceptionException("1012");
+                throw new InvalidDataExceptionException("400");
             } else {
                 if (userRepository.existsUserByUserMail(receiveUser.getUserMail())) {
-                    throw new UserMailDuplicateException("1006");
+                    throw new UserMailDuplicateException("409");
                 }
             }
             if (employeeDto.getUserDto().getUserPassword() == null || employeeDto.getUserDto().getUserPassword().isBlank()) {
-                throw new InvalidDataExceptionException("1012");
+                throw new InvalidDataExceptionException("400");
             } else {
                 receiveUser.setUserPasswordHash(encoder.encode(employeeDto.getUserDto().getUserPassword()));
             }

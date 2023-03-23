@@ -42,7 +42,7 @@ public class RoleServiceImpl implements RoleService {
         DtoToRoleConverter dtoToRoleConverter = new DtoToRoleConverter();
         Role createdRole = dtoToRoleConverter.convert(roleDto);
         if (roleRepository.existsRoleByRoleName(createdRole.getRoleName())) {
-            throw new EntityDuplicateException("1000");
+            throw new EntityDuplicateException("409");
         } else {
             roleRepository.save(dtoToRoleConverter.convert(roleDto));
             return roleToDtoConverter.convert(createdRole);
@@ -91,7 +91,7 @@ public class RoleServiceImpl implements RoleService {
                 return false;
             }
         } else {
-            throw new DeleteOrChangeEntityNotAllowException("1001");
+            throw new DeleteOrChangeEntityNotAllowException("403");
         }
         return true;
     }
@@ -105,11 +105,11 @@ public class RoleServiceImpl implements RoleService {
                 Role updatedRole = dtoToRoleConverter.convert(roleDto);
                 if (updatedRole.getRoleId() != null) {
                     if (id != updatedRole.getRoleId()) { // ID mismatch
-                        throw new IdMismatchException("1005");
+                        throw new IdMismatchException("409");
                     }
                 }
                 if (roleRepository.existsRoleByRoleName(updatedRole.getRoleName())) {
-                    throw new EntityDuplicateException("1000");
+                    throw new EntityDuplicateException("409");
                 } else {
                     updatedRole.setRoleId(id);
                     roleRepository.save(updatedRole);
@@ -119,7 +119,7 @@ public class RoleServiceImpl implements RoleService {
                 return false;
             }
         } else {
-            throw new DeleteOrChangeEntityNotAllowException("1001");
+            throw new DeleteOrChangeEntityNotAllowException("403");
         }
     }
 

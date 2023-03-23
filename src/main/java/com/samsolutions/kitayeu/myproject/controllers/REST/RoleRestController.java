@@ -57,6 +57,6 @@ public class RoleRestController {
         final RoleDto createdRole = roleService.createRole(roleDto);
         return createdRole != null
                 ? new ResponseEntity<>(HttpStatus.CREATED)
-                : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                : new ResponseEntity<>(HttpStatus.CONFLICT);
     }
 }

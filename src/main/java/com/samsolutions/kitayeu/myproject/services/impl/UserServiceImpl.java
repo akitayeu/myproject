@@ -61,25 +61,25 @@ public class UserServiceImpl implements UserService {
         DtoToUserConverter dtoToUserConverter = new DtoToUserConverter();
         User updatedUser = dtoToUserConverter.convert(userDto);
         if (id == 0) {  // userId=0 is reserved and can`t be changed
-            throw new DeleteOrChangeEntityNotAllowException("1001");
+            throw new DeleteOrChangeEntityNotAllowException("403");
         }
         if (updatedUser.getUserId() != null) {
             if (id != updatedUser.getUserId()) { // userId can`t be changed
-                throw new IdMismatchException("1005");
+                throw new IdMismatchException("409");
             }
         }
         User readUser = userRepository.findById(id).orElse(null);
         if (readUser == null) {
-            throw new UserNotFoundException("1008");
+            throw new UserNotFoundException("404");
         } else {
             if (updatedUser.getUserName() != null & updatedUser.getUserMail() != null) {  //userName and UserMail from DTO isn`t null
                 if (userRepository.existsUserByUserName(updatedUser.getUserName())) {    // check userName
                     if (userRepository.findUserByUserName(updatedUser.getUserName()).getUserId() != id) {
-                        throw new UserNameDuplicateException("1007");
+                        throw new UserNameDuplicateException("409");
                     } else {
                         if (userRepository.existsUserByUserMail(updatedUser.getUserMail())) {  //check UserMail when Username is OK
                             if (userRepository.findUserByUserMail(updatedUser.getUserMail()).getUserId() != id) {
-                                throw new UserMailDuplicateException("1006");
+                                throw new UserMailDuplicateException("409");
                             } else {
                                 updatedUser.setUserId(id);
                                 updatedUser.setUserPasswordHash(readUser.getUserPasswordHash());
@@ -95,7 +95,7 @@ public class UserServiceImpl implements UserService {
                     }
                 } else if (userRepository.existsUserByUserMail(updatedUser.getUserMail())) {  //check UserMail when Username is OK
                     if (userRepository.findUserByUserMail(updatedUser.getUserMail()).getUserId() != id) {
-                        throw new UserMailDuplicateException("1006");
+                        throw new UserMailDuplicateException("409");
                     } else {
                         updatedUser.setUserId(id);
                         updatedUser.setUserPasswordHash(readUser.getUserPasswordHash());
@@ -111,7 +111,7 @@ public class UserServiceImpl implements UserService {
             } else if (updatedUser.getUserName() == null & updatedUser.getUserMail() != null) {  //userName from DTO is null but UserMail isn`t null
                 if (userRepository.existsUserByUserMail(updatedUser.getUserMail())) {
                     if (userRepository.findUserByUserMail(updatedUser.getUserMail()).getUserId() != id) {
-                        throw new UserMailDuplicateException("1006");
+                        throw new UserMailDuplicateException("409");
                     } else {
                         updatedUser.setUserId(id);
                         updatedUser.setUserPasswordHash(readUser.getUserPasswordHash());
@@ -129,7 +129,7 @@ public class UserServiceImpl implements UserService {
             } else if (updatedUser.getUserMail() == null & updatedUser.getUserName() != null) { //userName from DTO isn`t null, UserMail is null
                 if (userRepository.existsUserByUserName(updatedUser.getUserName())) {
                     if (userRepository.findUserByUserName(updatedUser.getUserName()).getUserId() != id) {
-                        throw new UserNameDuplicateException("1007");
+                        throw new UserNameDuplicateException("409");
                     } else {
                         updatedUser.setUserId(id);
                         updatedUser.setUserPasswordHash(readUser.getUserPasswordHash());

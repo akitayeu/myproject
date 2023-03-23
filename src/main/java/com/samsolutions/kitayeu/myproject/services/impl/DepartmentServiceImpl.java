@@ -41,7 +41,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         Department createdDepartment = new DtoToDepartmentConverter().convert(departmentDto);
 
         if (departmentRepository.existsByDepartmentName(createdDepartment.getDepartmentName())) {
-            throw new EntityDuplicateException("1000");
+            throw new EntityDuplicateException("409");
         } else {
             departmentRepository.save(dtoToDepartmentConverter.convert(departmentDto));
             return departmentToDtoConverter.convert(createdDepartment);
@@ -72,7 +72,7 @@ public class DepartmentServiceImpl implements DepartmentService {
                 departmentRepository.deleteById(id);
             }
         } else {
-            throw new DeleteOrChangeEntityNotAllowException("1001");
+            throw new DeleteOrChangeEntityNotAllowException("403");
         }
     }
 
@@ -84,14 +84,14 @@ public class DepartmentServiceImpl implements DepartmentService {
         Department updatedDepartment = new DtoToDepartmentConverter().convert(departmentDto);
         if (id != 0) {
             if (departmentRepository.existsByDepartmentName(updatedDepartment.getDepartmentName())) {
-                throw new EntityDuplicateException("1000");
+                throw new EntityDuplicateException("409");
             } else {
                 departmentDto.setDepartmentId(id);
                 departmentRepository.save(dtoToDepartmentConverter.convert(departmentDto));
                 return departmentToDtoConverter.convert(updatedDepartment);
             }
         } else {
-            throw new DeleteOrChangeEntityNotAllowException("1001");
+            throw new DeleteOrChangeEntityNotAllowException("403");
         }
     }
 
