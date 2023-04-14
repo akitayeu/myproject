@@ -33,7 +33,7 @@ public class RoleRestController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','HR')")
+    @PreAuthorize("hasAnyRole('admin','hr')")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<?> deleteRole(@PathVariable(name = "id") int id) {
         final boolean deleted = roleService.deleteRole(id);
@@ -42,7 +42,7 @@ public class RoleRestController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','HR')")
+    @PreAuthorize("hasAnyRole('admin','hr')")
     @PutMapping(value = "/{id}")
     public ResponseEntity<?> updateRole(@RequestBody RoleDto roleDto, @PathVariable(name = "id") int id) {
         final boolean updated = roleService.updateRole(roleDto, id);
@@ -51,7 +51,7 @@ public class RoleRestController {
                 : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','HR')")
+    @PreAuthorize("hasAnyRole('admin','hr')")
     @PostMapping
     public ResponseEntity<?> createRole(@RequestBody RoleDto roleDto) {
         final RoleDto createdRole = roleService.createRole(roleDto);

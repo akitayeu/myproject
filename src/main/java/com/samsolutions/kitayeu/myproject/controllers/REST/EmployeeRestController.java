@@ -42,7 +42,7 @@ public class EmployeeRestController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','HR')")
+    @PreAuthorize("hasAnyRole('admin','hr')")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<?> deleteEmployee(@PathVariable(name = "id") int id) {
         final boolean deleted = employeeService.deleteEmployee(id);
@@ -51,7 +51,7 @@ public class EmployeeRestController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','HR')")
+    @PreAuthorize("hasAnyRole('admin','hr')")
     @PutMapping(value = "/{id}")
     public ResponseEntity<?> updateEmployee(@RequestBody EmployeeDto employeeDto, @PathVariable(name = "id") int id) {
         final Boolean updated = employeeService.updateEmployee(employeeDto, id);
@@ -60,7 +60,7 @@ public class EmployeeRestController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','HR')")
+    @PreAuthorize("hasAnyRole('admin','hr')")
     @PostMapping
     public ResponseEntity<?> createEmployee(@RequestBody EmployeeDto employeeDto) {
         final EmployeeDto createdEmployee = employeeService.createEmployee(employeeDto);

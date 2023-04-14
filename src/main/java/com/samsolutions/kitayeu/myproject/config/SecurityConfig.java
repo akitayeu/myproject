@@ -1,72 +1,52 @@
 package com.samsolutions.kitayeu.myproject.config;
 
-import com.samsolutions.kitayeu.myproject.services.UserAuthService;
+import org.keycloak.adapters.springsecurity.KeycloakConfiguration;
+import org.keycloak.adapters.springsecurity.authentication.KeycloakAuthenticationProvider;
+import org.keycloak.adapters.springsecurity.config.KeycloakWebSecurityConfigurerAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
+import org.springframework.security.core.session.SessionRegistryImpl;
+import org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy;
+import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
 
-@Configuration
+@KeycloakConfiguration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    public void configureGlobal(AuthenticationManagerBuilder auth) {
+        KeycloakAuthenticationProvider keycloakAuthenticationProvider = keycloakAuthenticationProvider();
+        keycloakAuthenticationProvider.setGrantedAuthoritiesMapper(new SimpleAuthorityMapper());
+        auth.authenticationProvider(keycloakAuthenticationProvider);
+    }
 
-    @Autowired
-    UserAuthService userAuthService;
-
-    /* -In-Memory
     @Bean
-    protected UserDetailsService userDetailsService() {
-        UserDetailsManager userDetailsManager = new InMemoryUserDetailsManager();
-        UserDetails user = User.withUsername("superadmin")
-                .password(passwordEncoder.encode("123"))
-                .roles("SUPERADMIN")
-                .build();
-        userDetailsManager.createUser(user);
-        return userDetailsManager;
+    @Override
+    protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
+        return new RegisterSessionAuthenticationStrategy(new SessionRegistryImpl());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests().anyRequest()
-                .authenticated().and()
-                .formLogin();
-    }
-    */
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable().httpBasic().disable().authorizeRequests()
+        super.configure(http);
+        http.cors().and().csrf().disable()
+                .authorizeRequests()
                 // MVC-controllers
-                .antMatchers("/departments/new/**").hasAnyRole("ADMIN", "HR")
-                .antMatchers("/departments/{id}/edit/**").hasAnyRole("ADMIN", "HR")
+                .antMatchers("/departments/new/**").hasAnyRole("admin", "hr")
+                .antMatchers("/departments/{id}/edit/**").hasAnyRole("admin", "hr")
                 .antMatchers("/departments/**").authenticated()
-                .antMatchers("/users/**").hasRole("ADMIN")
+                .antMatchers("/users/**").hasRole("admin")
                 .antMatchers("/roles/**").authenticated()
                 .antMatchers("/employees/**").authenticated()
                 // REST-controllers
-                .antMatchers("/api/users/**").hasRole("ADMIN")
+                .antMatchers("/api/users/**").hasRole("admin")
                 .antMatchers("/api/roles/**").authenticated()
                 .antMatchers("/api/employees/**").authenticated()
                 .and()
-                .formLogin().defaultSuccessUrl("/")
-                .and()
-                .logout().logoutSuccessUrl("/")
-                .and()
-                .oauth2ResourceServer()
-                .jwt();
-    }
-
-    @Bean
-    protected DaoAuthenticationProvider daoAuthenticationProvider() {
-        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
-        daoAuthenticationProvider.setUserDetailsService(userAuthService);
-        return daoAuthenticationProvider;
+                .logout().logoutSuccessUrl("/");
     }
 }
