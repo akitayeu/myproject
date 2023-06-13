@@ -29,6 +29,8 @@ public class User {
     @JoinColumn(name = "employee_id")
     Employee employee;
 
+    private String keycloakId;
+
     public User(String userName, String userMail, String userPasswordHash) {
         this.userName = userName;
         this.userMail = userMail;

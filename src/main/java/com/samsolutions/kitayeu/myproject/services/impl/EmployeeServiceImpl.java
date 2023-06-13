@@ -14,6 +14,7 @@ import com.samsolutions.kitayeu.myproject.repositories.EmployeeRepository;
 import com.samsolutions.kitayeu.myproject.repositories.RoleRepository;
 import com.samsolutions.kitayeu.myproject.repositories.UserRepository;
 import com.samsolutions.kitayeu.myproject.services.EmployeeService;
+import com.samsolutions.kitayeu.myproject.services.KeycloakService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
@@ -46,6 +47,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Autowired
     private PasswordEncoder encoder;
+
+    @Autowired
+    KeycloakService keycloakService;
 
     @Override
     public List<EmployeeDto> getAllEmployees(int page) {
@@ -272,6 +276,8 @@ public class EmployeeServiceImpl implements EmployeeService {
             } else {
                 receiveUser.setUserPasswordHash(encoder.encode(employeeDto.getUserDto().getUserPassword()));
             }
+            EmployeeDto keycloakEmployeeDto = keycloakService.createKeycloakUser(employeeDto);
+            receiveUser.setKeycloakId(keycloakEmployeeDto.getUserDto().getKeycloakId());
             createdEmployee.setUser(receiveUser);
         }
         employeeRepository.save(createdEmployee);

@@ -15,4 +15,6 @@ public class UserDto {
     private String userPasswordHash;
 
     private String userMail;
+
+    private String keycloakId;
 }
