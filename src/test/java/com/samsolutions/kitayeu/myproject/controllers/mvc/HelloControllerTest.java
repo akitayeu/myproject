@@ -22,7 +22,6 @@ public class HelloControllerTest {
 
 	@BeforeEach
 	public void setup() {
-
 	}
 
 	@Test
