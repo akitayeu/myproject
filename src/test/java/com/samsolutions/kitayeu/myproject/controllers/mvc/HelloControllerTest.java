@@ -24,6 +24,7 @@ public class HelloControllerTest {
 	public void setup() {
 	}
 
+	//Test isn`t OK on GitHub Action
 	@Test
 	@WithMockUser(username = "test_user", password = "test_pwd") // see test application.properties
 	public void testHomePage() throws Exception {
