@@ -1,4 +1,4 @@
 FROM openjdk:17
-WORKDIR /app
-COPY myproject.jar .
-ENTRYPOINT ["java","-jar","app/myproject.jar"]
+EXPOSE 8888
+COPY ./build/libs/myproject-0.0.1-SNAPSHOT.jar usr/bin/myproject.jar
+ENTRYPOINT ["java","-jar","usr/bin/myproject.jar"]
