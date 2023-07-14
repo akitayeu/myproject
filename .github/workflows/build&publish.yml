@@ -36,5 +36,9 @@ jobs:
       - name: Login, build and push to GHCR
         run: |
           docker login --username akitayeu --password ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }} ghcr.io
+          pwd
+          ls -la
+          ls -la build
           docker build . --tag ghcr.io/akitayeu/myproject:latest
           docker push ghcr.io/akitayeu/myproject:latest
+     
